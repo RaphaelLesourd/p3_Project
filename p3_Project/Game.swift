@@ -15,7 +15,21 @@ import Foundation
 
 
 class Game {
+    
+
+    let playerOne = Player(playerNumber: 1)
+    let playerTwo = Player(playerNumber: 2)
+    
+    
+    func start() {
+        playerOne.createTeam()
+        playerTwo.createTeam()
         
+    }
+    
+    
+    
+    
   
     
     

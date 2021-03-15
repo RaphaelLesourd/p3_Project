@@ -7,6 +7,16 @@
 
 import Foundation
 
+/// This class contains all properties of each players:
+/// - Player number 1 or 2
+/// - Player's team array
+///
+/// Player's functions:
+/// - Create team
+/// - Display team
+
+
+
 class Player {
     
     /// max number of characters in team
@@ -22,12 +32,14 @@ class Player {
         self.playerNumber = playerNumber
     }
     
-    // TODO:
-    //- Present player choice menu to select character
-    // - Create a team : - choose 3 characters
-    //                   - give it a name ***
-    //                   - add each character to the team array ***
+  
     
+    /// Create player's team flow
+    ///     - Display Intro message
+    ///     - Present Choice of characters
+    ///     - Await for player choice
+    ///     - Prompt to give a name
+    ///     - Add player to team
     func createTeam() {
         print("""
 
@@ -46,6 +58,7 @@ class Player {
             if let userChoice = readLine(), menuChoices.contains(userChoice) {
                 
                 var character: Character?
+                /// prompt player to give a name to this character
                 let name = characterNameRequest()
                 
                 switch userChoice {
@@ -63,9 +76,18 @@ class Player {
                 
                 /// unwrap optional for character , check if chracter is not nil
                 if let character = character {
+                    
                     /// if not nil add character to team
                     team.append(character)
-                    displayTeamInfo()
+                   
+                    /// Display's Team count
+                    /// If team complete , display team characters names
+                    if team.count == maxTeamCharacters {
+                        print("✅ Team complete, well done!")
+                        displayTeamMembers()
+                    } else {
+                        print("\n👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCharacters - (team.count)) more:")
+                    }
                 }
                 
             } else {
@@ -74,18 +96,27 @@ class Player {
         }
     }
     
-    /// Display's Team count
-    /// If team complete , display team characters names
-    private func displayTeamInfo() {
-       
-        if team.count == maxTeamCharacters {
-            print("✅ Team complete, well done!")
-            displayTeamMembers()
-        } else {
-            print("\n👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCharacters - (team.count)) more:")
-        }
+ 
+    /// - Menu with all 4 characters choice and their  characteristics
+    private func displayCharacterChoiceMenu() {
+        print("""
+            
+            1. \(Colossus.icon) Colossus has \(Colossus.maximumHealth) pts health, uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) point damages
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.maximumHealth) pts health, uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) point damages
+            3. \(Warrior.icon) Warrior has \(Warrior.maximumHealth) pts health, uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) point damages
+            4. \(Wizzard.icon) Wizzard can heal your team mates with his \(Wizzard.wand.name)
+            
+            """)
     }
+    
+    
+    
+    
    
+    // TODO :
+    // Decide if display all team members dead or alive
+    // or check if their currentHealth is at zero and not display
+    
     
     /// Display all team members.
     /// func public for access during the fight to check who remains in the team
@@ -100,19 +131,6 @@ class Player {
     }
 
    
-    /// - Menu with all 4 characters choice and their  characteristics
-    private func displayCharacterChoiceMenu() {
-        print("""
-            
-            1. \(Colossus.icon) Colossus has \(Colossus.maximumHealth) pts health, uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) point damages
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.maximumHealth) pts health, uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) point damages
-            3. \(Warrior.icon) Warrior has \(Warrior.maximumHealth) pts health, uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) point damages
-            4. \(Wizzard.icon) Wizzard can heal your team mates with his \(Wizzard.wand.name)
-            
-            """)
-    }
-    
-    
     
     // MARK: - Character Name Request functions
     

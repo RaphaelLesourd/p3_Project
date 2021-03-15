@@ -13,12 +13,15 @@ import Foundation
 class Colossus: Character {
     
     /// Character own max health point
-    let maximumHealth = 50
+    static let maximumHealth = 50
     /// Character's weapon
     static let weapon = Weapon(name: "Punch", damages: 20, healingPower: 0)
     
     /// - Parameter name: name given by the player
     init(name: String) {
-        super.init(name: name, maximumHealth: maximumHealth, currentHealth: 50, weapon: Colossus.weapon)
+        super.init(name: name,
+                   maximumHealth: Colossus.maximumHealth,
+                   currentHealth: 50,
+                   weapon: Colossus.weapon)
     }
 }

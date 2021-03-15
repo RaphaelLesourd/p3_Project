@@ -13,12 +13,15 @@ import Foundation
 class Wizzard: Character {
     
     /// Character own max health point
-    let maximumHealth = 50
+    static let maximumHealth = 50
     /// Character's weapon
     static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 100)
     
     /// - Parameter name: name given by the player
     init(name: String) {
-        super.init(name: name, maximumHealth: maximumHealth, currentHealth: 50, weapon: Wizzard.wand)
+        super.init(name: name,
+                   maximumHealth: Wizzard.maximumHealth,
+                   currentHealth: 50,
+                   weapon: Wizzard.wand)
     }
 }

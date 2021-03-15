@@ -13,19 +13,21 @@ class Player {
     /// max number of characters in team
     let maxTeamCharacters = 3
     
-    /// player number  1 or 2
     var playerNumber: Int
     
     /// array storing all characters in player's team
     var team = [Character]()
   
+    
+    /// Instantiate a player
+    /// - Parameter playerNumber: either player 1 or player 2
     init(playerNumber: Int) {
         self.playerNumber = playerNumber
     }
     
-    
-    // What each player have to do:
-    
+     
+    // TODO:
+    //- Present player choice menu to select character
     // - Create a team : - choose 3 characters
     //                   - give it a name ***
     //                   - add each character to the team array ***
@@ -33,13 +35,13 @@ class Player {
     
     func createTeam() {
         while team.count < maxTeamCharacters {
-           characterChoiceMenu()
+           presentCharacterChoiceMenu()
             
         }
     }
     
     
-    private func characterChoiceMenu() {
+    private func presentCharacterChoiceMenu() {
         
         // - Present Menu with all 4 characters choice and that characteristics
         // - Wait for user input
@@ -47,12 +49,13 @@ class Player {
         
         print("""
             Player \(playerNumber), please choose \(maxTeamCharacters - team.count)  characters to join your team:
-
+            1. Colossus has \(Colossus.maximumHealth) pts health, uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) point damages
+            2. Dwarf has \(Dwarf.maximumHealth) pts health, uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) point damages
+            3. Warrior has \(Warrior.maximumHealth) pts health, uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) point damages
+            4. 🧙🏽‍♂️ Wizzard can heal your team mates with his \(Wizzard.wand.name)
             
-
             """)
-        
-        
+         
     }
     
    

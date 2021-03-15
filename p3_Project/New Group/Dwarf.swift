@@ -13,12 +13,15 @@ import Foundation
 class Dwarf: Character {
     
     /// Character own max health point
-    let maximumHealth = 50
+    static let maximumHealth = 50
     /// Character's weapon
     static let weapon = Weapon(name: "Axe", damages: 50, healingPower: 0)
     
     /// - Parameter name: name given by the player
     init(name: String) {
-        super.init(name: name, maximumHealth: maximumHealth, currentHealth: 50, weapon: Dwarf.weapon)
+        super.init(name: name,
+                   maximumHealth: Dwarf.maximumHealth,
+                   currentHealth: 50,
+                   weapon: Dwarf.weapon)
     }
 }

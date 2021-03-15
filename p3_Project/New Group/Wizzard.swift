@@ -8,20 +8,25 @@
 import Foundation
 
 
-/// Characters Max Health,  and weapon damages needs to be defined. Temp value for now
+/// Characters requirements
+/// health : High
+/// damages: Low
+/// healing: yes
 
 class Wizzard: Character {
     
     /// Character own max health point
-    static let maximumHealth = 50
+    static let maximumHealth = 100
     /// Character's weapon
-    static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 100)
+    static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 30)
+    static let icon = "🧙🏽‍♂️"
     
     /// - Parameter name: name given by the player
     init(name: String) {
         super.init(name: name,
+                   icon: Wizzard.icon,
                    maximumHealth: Wizzard.maximumHealth,
-                   currentHealth: 50,
+                   currentHealth: Wizzard.maximumHealth,
                    weapon: Wizzard.wand)
     }
 }

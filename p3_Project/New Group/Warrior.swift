@@ -7,20 +7,24 @@
 
 import Foundation
 
-/// Characters Max Health,  and weapon damages needs to be defined. Temp value for now
-
+/// Characters requirements
+/// health : High 100 as per request
+/// damages: Low  10 as per request
+/// healing: None
 class Warrior: Character {
     
     /// Character own max health point
     static let maximumHealth = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
+    static let icon = "👺"
     
     /// - Parameter name: name given by the player
     init(name: String) {
         super.init(name: name,
+                   icon: Warrior.icon,
                    maximumHealth: Warrior.maximumHealth,
-                   currentHealth: 100,
+                   currentHealth: Warrior.maximumHealth,
                    weapon: Warrior.weapon)
     }
     

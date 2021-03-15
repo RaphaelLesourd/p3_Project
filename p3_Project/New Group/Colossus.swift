@@ -8,20 +8,25 @@
 import Foundation
 
 
-/// Characters Max Health,  and weapon damages needs to be defined. Temp value for now
+/// Characters requirements
+/// health : High
+/// damages: Low
+/// healing: None
 
 class Colossus: Character {
     
     /// Character own max health point
-    static let maximumHealth = 50
+    static let maximumHealth = 100
     /// Character's weapon
-    static let weapon = Weapon(name: "Punch", damages: 20, healingPower: 0)
+    static let weapon = Weapon(name: "Punch", damages: 5, healingPower: 0)
+    static let icon = "🦾"
     
     /// - Parameter name: name given by the player
     init(name: String) {
         super.init(name: name,
+                   icon: Colossus.icon,
                    maximumHealth: Colossus.maximumHealth,
-                   currentHealth: 50,
+                   currentHealth: Colossus.maximumHealth,
                    weapon: Colossus.weapon)
     }
 }

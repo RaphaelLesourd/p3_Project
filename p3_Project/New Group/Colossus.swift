@@ -13,7 +13,7 @@ import Foundation
 /// damages: Low
 /// healing: None
 
-class Colossus: Character {
+class Colossus: Companion {
     
     /// Character own max health point
     static let maximumHealth = 100

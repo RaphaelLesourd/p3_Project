@@ -12,7 +12,7 @@ import Foundation
 /// damages: high
 /// healing: None
 
-class Dwarf: Character {
+class Dwarf: Companion {
     
     /// Character own max health point
     static let maximumHealth = 50

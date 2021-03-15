@@ -16,15 +16,15 @@ import Foundation
 /// - Display team
 
 
-
 class Player {
     
-    /// max number of characters in team
-    let maxTeamCharacters = 3
-    var playerNumber: Int
+    /// max number of companions in team
+    let maxTeamCompanions = 3
     
-    /// array storing all characters in player's team
-    var team = [Character]()
+    /// Player's id
+    var playerNumber: Int
+    /// array storing all companions in player's team
+    var team = [Companion]()
     
     /// Instantiate a player
     /// - Parameter playerNumber: either player 1 or player 2
@@ -32,11 +32,10 @@ class Player {
         self.playerNumber = playerNumber
     }
     
-  
     
     /// Create player's team flow
     ///     - Display Intro message
-    ///     - Present Choice of characters
+    ///     - Present Choice of companions
     ///     - Await for player choice
     ///     - Prompt to give a name
     ///     - Add player to team
@@ -45,48 +44,46 @@ class Player {
 
         *** 👩‍👦 PLAYER \(playerNumber) Create your team ***
 
-        Please choose \(maxTeamCharacters) characters to join your team:
+        Please select \(maxTeamCompanions) companions to join your team:
         """)
-       
-        /// while loop requesting character until team contains maxTeamCharacters (3)
-        while team.count < maxTeamCharacters {
-            
-            displayCharacterChoiceMenu()
+        displayCompanionChoiceMenu()
+        
+        /// while loop requesting companion until team contains maxTeamCompanions (3)
+        while team.count < maxTeamCompanions {
             
             let menuChoices = "1234"
             /// Checks if userChoice input is not empty and part of the menu choices
             if let userChoice = readLine(), menuChoices.contains(userChoice) {
                 
-                var character: Character?
-                /// prompt player to give a name to this character
-                let name = characterNameRequest()
+                var companion: Companion?
+                /// prompt player to give a name to this companion 
+                let name = companionNameRequest()
                 
                 switch userChoice {
                 case "1":
-                    character = Colossus(name: name)
+                    companion = Colossus(name: name)
                 case "2":
-                    character = Dwarf(name: name)
+                    companion = Dwarf(name: name)
                 case "3":
-                    character = Warrior(name: name)
+                    companion = Warrior(name: name)
                 case "4":
-                    character = Wizzard(name: name)
+                    companion = Wizzard(name: name)
                 default:
                     print("⛔️ This choice doesn't exist")
                 }
                 
-                /// unwrap optional for character , check if chracter is not nil
-                if let character = character {
+                /// unwrap optional for companion , check if companion  is not nil
+                if let companion = companion {
                     
-                    /// if not nil add character to team
-                    team.append(character)
-                   
+                    /// if not nil add companion  to team
+                    team.append(companion)
+                    
                     /// Display's Team count
-                    /// If team complete , display team characters names
-                    if team.count == maxTeamCharacters {
+                    /// If team complete , display team companions names
+                    if team.count == maxTeamCompanions {
                         print("✅ Team complete, well done!")
-                        displayTeamMembers()
                     } else {
-                        print("\n👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCharacters - (team.count)) more:")
+                        print("\n👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCompanions - (team.count)) more:")
                     }
                 }
                 
@@ -94,11 +91,14 @@ class Player {
                 print("⛔️ Oups! I don't understand your choice.")
             }
         }
+        
+        
     }
     
- 
+    // MARK: - Display Info
+    
     /// - Menu with all 4 characters choice and their  characteristics
-    private func displayCharacterChoiceMenu() {
+    private func displayCompanionChoiceMenu() {
         print("""
             
             1. \(Colossus.icon) Colossus has \(Colossus.maximumHealth) pts health, uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) point damages
@@ -109,34 +109,48 @@ class Player {
             """)
     }
     
-    
-    
-    
-   
-    // TODO :
-    // Decide if display all team members dead or alive
-    // or check if their currentHealth is at zero and not display
-    
-    
+  
     /// Display all team members.
     /// func public for access during the fight to check who remains in the team
     /// show character Dead if current health of each characters is at 0,
-    public func displayTeamMembers() {
+    public func displayCompanionList() {
+        
         var teamCount = 0
         team.forEach { (character) in
             teamCount += 1
-            let status = character.currentHealth == 0 ? "is ☠️ DEAD ☠️" : "remaining ❤️ Life: \(character.currentHealth) points"
+            var weaponStrength = String()
+            /// Check if character is wizzard
+            /// success case : display weapon healing power
+            /// fail case : display weapon damage power
+            if let chosenCharacter = character as? Wizzard {
+                weaponStrength = "(\(chosenCharacter.weapon.healingPower)pts)"
+            } else {
+                weaponStrength = "(\(character.weapon.damage)pts)"
+            }
+            
+            let aliveStatus = "❤️ Life: \(character.currentHealth)/\(character.maximumHealth) Weapon: \(character.weapon.name) " + weaponStrength
+            let deadStatus = "is ☠️ DEAD ☠️"
+            
+            /// Check characters health and display dead or alive message with stats
+            let status = character.currentHealth == 0 ? deadStatus : aliveStatus
+            
             print("\(teamCount). \(character.icon) \(character.name.uppercased()) \(status)")
         }
     }
-
-   
     
-    // MARK: - Character Name Request functions
+    
+    // TODO Select fighter
+    
+    
+}
+
+
+// MARK: - Character Name Request functions
+extension Player {
     
     /// Request user input for character's name
     /// return name if not empty and not in the team already
-    private func characterNameRequest() -> String {
+    private func companionNameRequest() -> String {
         /// Prompt player to give a name
         print("💭 Choose a name for this character:")
         
@@ -149,7 +163,7 @@ class Player {
         }
         /// case name taken: inform user and ask again for name
         print("⛔️ Name already taken !")
-        return characterNameRequest()
+        return companionNameRequest()
     }
     
     

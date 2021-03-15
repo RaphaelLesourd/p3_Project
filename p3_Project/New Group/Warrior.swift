@@ -11,7 +11,7 @@ import Foundation
 /// health : High 100 as per request
 /// damages: Low  10 as per request
 /// healing: None
-class Warrior: Character {
+class Warrior: Companion {
     
     /// Character own max health point
     static let maximumHealth = 100

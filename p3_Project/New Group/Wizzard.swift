@@ -13,7 +13,7 @@ import Foundation
 /// damages: Low
 /// healing: yes
 
-class Wizzard: Character {
+class Wizzard: Companion {
     
     /// Character own max health point
     static let maximumHealth = 100

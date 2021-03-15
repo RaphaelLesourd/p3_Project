@@ -15,6 +15,7 @@ class Game {
     
     /// The game starts
     func start() {
+        displayIntroMessage()
         /// each player create a team
         playerOne.createTeam()
         playerTwo.createTeam()
@@ -22,15 +23,31 @@ class Game {
         teamStatusBoard()
     }
     
+   
     
-    func teamStatusBoard() {
+    private func displayIntroMessage() {
+        print("""
+            Welcome to Fighter's game...
+            Before you can defeat your sworn enemy,
+            you need to surround yourself
+            with companions to fight for you.
+
+
+            """)
+    }
+    
+    
+    
+   private func teamStatusBoard() {
         
         print("\nTeams current status\n")
         print("PLAYER 1")
-        playerOne.displayTeamMembers()
+        playerOne.displayCompanionList()
         
         print("\nPLAYER 2")
-        playerTwo.displayTeamMembers()
+        playerTwo.displayCompanionList()
     }
+    
+    
     
 }

@@ -14,7 +14,7 @@
 		812EC82325FF573B0030C74F /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABF625FE243B0095E576 /* Weapon.swift */; };
 		8166ABD325FD2B210095E576 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABD225FD2B210095E576 /* main.swift */; };
 		8166ABDB25FD2B5C0095E576 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABDA25FD2B5C0095E576 /* Game.swift */; };
-		8166ABE025FE18910095E576 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABDF25FE18910095E576 /* Character.swift */; };
+		8166ABE025FE18910095E576 /* Companion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABDF25FE18910095E576 /* Companion.swift */; };
 		8166ABE425FE18A20095E576 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8166ABE325FE18A20095E576 /* Player.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 		8166ABCF25FD2B210095E576 /* p3_Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = p3_Project; sourceTree = BUILT_PRODUCTS_DIR; };
 		8166ABD225FD2B210095E576 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8166ABDA25FD2B5C0095E576 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		8166ABDF25FE18910095E576 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		8166ABDF25FE18910095E576 /* Companion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Companion.swift; sourceTree = "<group>"; };
 		8166ABE325FE18A20095E576 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8166ABF625FE243B0095E576 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,7 +88,7 @@
 				8166ABDA25FD2B5C0095E576 /* Game.swift */,
 				8166ABE325FE18A20095E576 /* Player.swift */,
 				8166ABF625FE243B0095E576 /* Weapon.swift */,
-				8166ABDF25FE18910095E576 /* Character.swift */,
+				8166ABDF25FE18910095E576 /* Companion.swift */,
 				812EC82525FF5A6E0030C74F /* New Group */,
 			);
 			path = p3_Project;
@@ -156,7 +156,7 @@
 				810DC85F25FF5B2F007FE878 /* Dwarf.swift in Sources */,
 				8166ABE425FE18A20095E576 /* Player.swift in Sources */,
 				810DC86225FF5B7D007FE878 /* Colossus.swift in Sources */,
-				8166ABE025FE18910095E576 /* Character.swift in Sources */,
+				8166ABE025FE18910095E576 /* Companion.swift in Sources */,
 				8166ABD325FD2B210095E576 /* main.swift in Sources */,
 				8166ABDB25FD2B5C0095E576 /* Game.swift in Sources */,
 				812EC82325FF573B0030C74F /* Weapon.swift in Sources */,

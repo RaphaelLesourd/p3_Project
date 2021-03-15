@@ -11,7 +11,15 @@ import Foundation
 
 class Warrior: Character {
     
-  
+    /// Character own max health point
+    let maximumHealth = 100
+    /// Character's weapon
+    static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
+    
+    /// - Parameter name: name given by the player
+    init(name: String) {
+        super.init(name: name, maximumHealth: maximumHealth, currentHealth: 100, weapon: Warrior.weapon)
+    }
     
    
 }

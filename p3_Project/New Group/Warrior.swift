@@ -17,7 +17,7 @@ class Warrior: Companion {
     static let maxLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
-    static let icon = "👺"
+    static let icon = "🤡"
     
     /// - Parameter name: name given by the player
     init(name: String) {

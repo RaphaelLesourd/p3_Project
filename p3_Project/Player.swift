@@ -16,8 +16,13 @@ import Foundation
 /// - Display team
 
 
-class Player {
+class Player: Equatable {
     
+    /// Class conforms to Equatable protocol so current player and enemy's player can be compared to swap turn
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return lhs.playerNumber == rhs.playerNumber 
+    }
+
     /// max number of companions in team
     let maxTeamCompanions = 3
     
@@ -81,9 +86,9 @@ class Player {
                     /// Display's Team count
                     /// If team complete , display team companions names
                     if team.count == maxTeamCompanions {
-                        print("✅ Team complete, well done!")
+                        print("✅ Team complete, well done!\n")
                     } else {
-                        print("\n👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCompanions - (team.count)) more:")
+                        print("👨‍👨‍👦‍👦 Team count \(team.count) - Select \(maxTeamCompanions - (team.count)) more:")
                     }
                 }
                 
@@ -109,38 +114,54 @@ class Player {
             """)
     }
     
-  
-    /// Display all team members.
-    /// func public for access during the fight to check who remains in the team
-    /// show character Dead if current Life of each characters is at 0,
-    public func displayCompanionList() {
+    
+     func displayTeam() {
+    
+        guard team.count != 0 else {
+            print("All Dead !")
+            return
+        }
         
-        var teamCount = 0
-        team.forEach { (character) in
-            teamCount += 1
+        //enumarate team array to display remaining companions
+        for (index, companion) in team.enumerated() {
+            
             var weaponStrength = String()
             /// Check if character is wizzard
             /// success case : display weapon healing power
             /// fail case : display weapon damage power
-            if let chosenCharacter = character as? Wizzard {
-                weaponStrength = "(\(chosenCharacter.weapon.healingPower)pts)"
+            if let chosenCharacter = companion as? Wizzard {
+                weaponStrength = "\(chosenCharacter.weapon.healingPower)"
             } else {
-                weaponStrength = "(\(character.weapon.damage)pts)"
+                weaponStrength = "\(companion.weapon.damage)"
             }
-            
-            let aliveStatus = "❤️ Life: \(character.currentLife)/\(character.maxLife) - 🤺 Weapon: \(character.weapon.name) " + weaponStrength
-            let deadStatus = "is ☠️ DEAD ☠️"
-            
-            /// Check characters Life and display dead or alive message with stats
-            let status = character.currentLife == 0 ? deadStatus : aliveStatus
-            
-            print("\(teamCount). \(character.icon) \(character.name.uppercased()) \(status)")
+            print("\(index + 1). \(companion.icon) \(companion.name). ❤️ Life: \(companion.currentLife) ---- 🥊 Weapon: \(companion.weapon.name) \(weaponStrength) ")
         }
     }
     
     
-    // TODO Select fighter
     
+    
+    /// Player selects his companion from his team or enemys from other team
+    /// - Parameter team: pass in team which character is selected from
+    /// - Returns: return selected charater
+     func selectFighters(from team: [Companion]) -> Companion {
+        /// Prompt player to make a choice
+        if let playerChoice = readLine() {
+            /// convert string to Int
+            /// check if player choice is valid by comparing input to team count
+        
+            if let index = Int(playerChoice), index <= team.count {
+                /// if choice is valid return companion
+                let chosenCompanion = team[index - 1]
+                print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name)")
+                return chosenCompanion
+            }
+            /// if choice not valid inform player and return to selection
+            print("oups! this choice does not exist")
+        }
+        return selectFighters(from: team)
+    }
+   
     
 }
 

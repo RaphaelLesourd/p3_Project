@@ -18,7 +18,7 @@ class Dwarf: Companion {
     static let maxLife = 50
     /// Character's weapon
     static let weapon = Weapon(name: "Axe", damages: 50, healingPower: 0)
-    static let icon = "👩‍🦲"
+    static let icon = "🐣"
     
     /// - Parameter name: name given by the player
     init(name: String) {

@@ -33,6 +33,7 @@ class Companion {
         self.weapon = weapon
     }
     
+    
     // MARK: - Characters abilities
     
     
@@ -48,6 +49,8 @@ class Companion {
         if enemy.currentLife <= 0 {
             enemy.currentLife = 0
             print("\(enemy.icon) \(enemy.name) is DEAD !")
+        } else {
+            print("Great Job!, \(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.")
         }
     }
     
@@ -66,5 +69,6 @@ class Companion {
         }
     }
     
+
    
 }

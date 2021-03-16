@@ -19,7 +19,7 @@ class Wizzard: Companion {
     static let maxLife = 100
     /// Character's weapon
     static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 30)
-    static let icon = "🧙🏽‍♂️"
+    static let icon = "🎃"
     
     /// - Parameter name: name given by the player
     init(name: String) {

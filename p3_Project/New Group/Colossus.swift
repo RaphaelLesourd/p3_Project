@@ -19,7 +19,7 @@ class Colossus: Companion {
     static let maxLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Punch", damages: 5, healingPower: 0)
-    static let icon = "🦾"
+    static let icon = "🐹"
     
     /// - Parameter name: name given by the player
     init(name: String) {

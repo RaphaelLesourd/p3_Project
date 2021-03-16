@@ -20,7 +20,7 @@ class Weapon {
     /// - Parameters:
     ///   - name: weapon's given name for each companions
     ///   - damages: number of points to be substracted for enemy's life
-    ///   - healingPower: number of point add to team companion's health points
+    ///   - healingPower: number of point add to team companion's life points
     init(name: String, damages: Int, healingPower: Int) {
         self.name = name
         self.damage = damages

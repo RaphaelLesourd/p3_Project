@@ -15,8 +15,8 @@ import Foundation
 
 class Wizzard: Companion {
     
-    /// Character own max health point
-    static let maximumHealth = 100
+    /// Character own max life point
+    static let maxLife = 100
     /// Character's weapon
     static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 30)
     static let icon = "🧙🏽‍♂️"
@@ -25,8 +25,8 @@ class Wizzard: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Wizzard.icon,
-                   maximumHealth: Wizzard.maximumHealth,
-                   currentHealth: Wizzard.maximumHealth,
+                   maximumLife: Wizzard.maxLife,
+                   currentLife: Wizzard.maxLife,
                    weapon: Wizzard.wand)
     }
 }

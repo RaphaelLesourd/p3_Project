@@ -13,8 +13,8 @@ import Foundation
 /// healing: None
 class Warrior: Companion {
     
-    /// Character own max health point
-    static let maximumHealth = 100
+    /// Character own max life point
+    static let maxLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
     static let icon = "👺"
@@ -23,8 +23,8 @@ class Warrior: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Warrior.icon,
-                   maximumHealth: Warrior.maximumHealth,
-                   currentHealth: Warrior.maximumHealth,
+                   maximumLife: Warrior.maxLife,
+                   currentLife: Warrior.maxLife,
                    weapon: Warrior.weapon)
     }
     

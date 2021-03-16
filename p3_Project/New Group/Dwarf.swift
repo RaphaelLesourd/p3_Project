@@ -14,8 +14,8 @@ import Foundation
 
 class Dwarf: Companion {
     
-    /// Character own max health point
-    static let maximumHealth = 50
+    /// Character own max life point
+    static let maxLife = 50
     /// Character's weapon
     static let weapon = Weapon(name: "Axe", damages: 50, healingPower: 0)
     static let icon = "👩‍🦲"
@@ -24,8 +24,8 @@ class Dwarf: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Dwarf.icon,
-                   maximumHealth: Dwarf.maximumHealth,
-                   currentHealth: Dwarf.maximumHealth,
+                   maximumLife: Dwarf.maxLife,
+                   currentLife: Dwarf.maxLife,
                    weapon: Dwarf.weapon)
     }
 }

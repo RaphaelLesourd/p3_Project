@@ -14,22 +14,22 @@ class Companion {
 
     var name: String
     var icon: String
-    var maximumHealth: Int
-    var currentHealth: Int
+    var maxLife: Int
+    var currentLife: Int
     var weapon: Weapon
     
     
     /// Character's properties
     /// - Parameters:
     ///   - name: companion's name given by the player
-    ///   - maximumHealth: health point at start of each game
-    ///   - currentHealth: tracks current health of the companions
+    ///   - maximumLife: Life point at start of each game
+    ///   - currentLife: tracks current Life of the companions
     ///   - weapon: default weapon carried by the companion
-    init(name: String, icon: String, maximumHealth: Int, currentHealth: Int, weapon: Weapon) {
+    init(name: String, icon: String, maximumLife: Int, currentLife: Int, weapon: Weapon) {
         self.name = name
         self.icon = icon
-        self.maximumHealth = maximumHealth
-        self.currentHealth = currentHealth
+        self.maxLife = maximumLife
+        self.currentLife = currentLife
         self.weapon = weapon
     }
     
@@ -37,16 +37,16 @@ class Companion {
     
     
     /// attacks enemies
-    /// reduces eneny's currentHealth by weapon damage point
+    /// reduces eneny's currentLifeby weapon damage point
     /// - Parameter enemy: pass in oponent companion
     func fight(enemy: Companion) {
-        enemy.currentHealth -= self.weapon.damage
+        enemy.currentLife -= self.weapon.damage
         
-        /// if enemy's current health equate 0 or less
-        /// set currentHealth at 0
+        /// if enemy's current Life equate 0 or less
+        /// set currentLife at 0
         /// inform player companions dead
-        if enemy.currentHealth <= 0 {
-            enemy.currentHealth = 0
+        if enemy.currentLife <= 0 {
+            enemy.currentLife = 0
             print("\(enemy.icon) \(enemy.name) is DEAD !")
         }
     }
@@ -56,12 +56,12 @@ class Companion {
     /// - Parameter teamPlayer: pass in templayer companion
     func heal(companion: Companion) {
         if self.weapon.healingPower > 0 {
-            companion.currentHealth += self.weapon.healingPower
+            companion.currentLife += self.weapon.healingPower
             
-            /// if reaches max Heath then current health equate to max health
-            if companion.currentHealth > companion.maximumHealth {
-                companion.currentHealth = companion.maximumHealth
-                print("Your health is back to full!")
+            /// if reaches max Life then current Life equate to max Life
+            if companion.currentLife > companion.maxLife {
+                companion.currentLife = companion.maxLife
+                print("Your Life is back to full!")
             }
         }
     }

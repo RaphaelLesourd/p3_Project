@@ -101,10 +101,10 @@ class Player {
     private func displayCompanionChoiceMenu() {
         print("""
             
-            1. \(Colossus.icon) Colossus has \(Colossus.maximumHealth) pts health, uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) point damages
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.maximumHealth) pts health, uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) point damages
-            3. \(Warrior.icon) Warrior has \(Warrior.maximumHealth) pts health, uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) point damages
-            4. \(Wizzard.icon) Wizzard can heal your team mates with his \(Wizzard.wand.name)
+            1. \(Colossus.icon) Colossus has \(Colossus.maxLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.maxLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
+            3. \(Warrior.icon) Warrior has \(Warrior.maxLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
+            4. \(Wizzard.icon) Wizzard has \(Warrior.maxLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
             
             """)
     }
@@ -112,7 +112,7 @@ class Player {
   
     /// Display all team members.
     /// func public for access during the fight to check who remains in the team
-    /// show character Dead if current health of each characters is at 0,
+    /// show character Dead if current Life of each characters is at 0,
     public func displayCompanionList() {
         
         var teamCount = 0
@@ -128,11 +128,11 @@ class Player {
                 weaponStrength = "(\(character.weapon.damage)pts)"
             }
             
-            let aliveStatus = "❤️ Life: \(character.currentHealth)/\(character.maximumHealth) Weapon: \(character.weapon.name) " + weaponStrength
+            let aliveStatus = "❤️ Life: \(character.currentLife)/\(character.maxLife) - 🤺 Weapon: \(character.weapon.name) " + weaponStrength
             let deadStatus = "is ☠️ DEAD ☠️"
             
-            /// Check characters health and display dead or alive message with stats
-            let status = character.currentHealth == 0 ? deadStatus : aliveStatus
+            /// Check characters Life and display dead or alive message with stats
+            let status = character.currentLife == 0 ? deadStatus : aliveStatus
             
             print("\(teamCount). \(character.icon) \(character.name.uppercased()) \(status)")
         }

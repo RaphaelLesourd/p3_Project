@@ -205,15 +205,15 @@ class Game {
         /// - Remaining companions for the wining team
         /// - Loser team show all companions are dead
         print("""
-            --------------------------------------------
-
-            ⭐️⭐️ ⭐️ Player \(playerNumber) WON ⭐️⭐️⭐️
+            
+            ⭐️⭐️ ⭐️ Player \(playerNumber) WON  in \(numberOfRounds) rounds⭐️⭐️⭐️
 
             """)
         print("Player \(playerOne.playerNumber) Team")
         playerOne.displayTeam()
-        print("\nPlayer \(playerTwo.playerNumber) Team")
+        print("\nPlayer \(playerTwo.playerNumber) Team\n")
         playerTwo.displayTeam()
+        
     }
     
 }

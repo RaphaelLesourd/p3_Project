@@ -46,13 +46,13 @@ class Player: Equatable {
     ///     - Prompt to give a name
     ///     - Add player to team
     func createTeam() {
-        print("""
+        
+        print("*** 👩‍👦 PLAYER \(playerNumber) Create your team ***")
 
-        *** 👩‍👦 PLAYER \(playerNumber) Create your team ***
-
-        Please select \(maxTeamCompanions) companions to join your team:
-        """)
         displayCompanionChoiceMenu()
+        
+        print("Please select \(maxTeamCompanions) companions to join your team:")
+        
         
         /// while loop requesting companion until team contains maxTeamCompanions (3)
         while team.count < maxTeamCompanions {
@@ -154,7 +154,6 @@ class Player: Equatable {
             if let index = Int(playerChoice), index <= team.count {
                 /// if choice is valid return companion
                 let chosenCompanion = team[index - 1]
-                print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name.uppercased())")
                 return chosenCompanion
             }
             /// if choice not valid inform player and return to selection

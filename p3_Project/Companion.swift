@@ -10,7 +10,7 @@ import Foundation
 
 /// This class defines the companions properties and abilities
 class Companion {
-
+    
     var name: String
     var icon: String
     var maxLife: Int
@@ -47,9 +47,15 @@ class Companion {
         /// inform player companions dead
         if enemy.currentLife <= 0 {
             enemy.currentLife = 0
-            print("\(enemy.icon) \(enemy.name) is ⚰️ DEAD !")
+            print("""
+
+            ----------------------------------------
+            \(enemy.icon) \(enemy.name) is ⚰️ DEAD !
+            ----------------------------------------
+
+            """)
         } else {
-            print("Great Job!, \(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.")
+            print("Great Job!, \(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.\n")
         }
     }
     
@@ -65,11 +71,11 @@ class Companion {
             /// if reaches max Life then current Life equate to max Life
             if companion.currentLife > companion.maxLife {
                 companion.currentLife = companion.maxLife
-                print("🧬 Your Life is back to full!")
+                print("🧬 Your Life is back to full! 🧬")
             }
         }
     }
     
-
-   
+    
+    
 }

@@ -176,7 +176,7 @@ class Game {
             You found a vault containing a \(companion.weapon.name)
         
             It will give \(companion.weapon.damage)
-                points of damage to your enemy!
+            points of damage to your enemy!
         ✨----------------------------------------------------------✨
 
         \(companion.icon) \(companion.name.uppercased()) new weapon: \(companion.weapon.name) \(companion.weapon.damage)

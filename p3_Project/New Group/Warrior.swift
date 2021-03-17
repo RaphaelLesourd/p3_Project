@@ -11,13 +11,14 @@ import Foundation
 /// health : High 100 as per request
 /// damages: Low  10 as per request
 /// healing: None
+
 class Warrior: Companion {
     
     /// Character own max life point
     static let maxLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
-    static let icon = "🤡"
+    static let icon = "🥷🏼"
     
     /// - Parameter name: name given by the player
     init(name: String) {
@@ -27,6 +28,4 @@ class Warrior: Companion {
                    currentLife: Warrior.maxLife,
                    weapon: Warrior.weapon)
     }
-    
-   
 }

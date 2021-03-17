@@ -9,7 +9,6 @@ import Foundation
 
 
 /// This class defines the companions properties and abilities
-
 class Companion {
 
     var name: String
@@ -48,11 +47,13 @@ class Companion {
         /// inform player companions dead
         if enemy.currentLife <= 0 {
             enemy.currentLife = 0
-            print("\(enemy.icon) \(enemy.name) is DEAD !")
+            print("\(enemy.icon) \(enemy.name) is ⚰️ DEAD !")
         } else {
             print("Great Job!, \(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.")
         }
     }
+    
+    
     
     /// heal team members
     /// add wizzard weapon (magic wand) healing points
@@ -64,7 +65,7 @@ class Companion {
             /// if reaches max Life then current Life equate to max Life
             if companion.currentLife > companion.maxLife {
                 companion.currentLife = companion.maxLife
-                print("Your Life is back to full!")
+                print("🧬 Your Life is back to full!")
             }
         }
     }

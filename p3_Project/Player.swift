@@ -14,6 +14,7 @@ import Foundation
 /// Player's functions:
 /// - Create team
 /// - Display team
+/// - Selecter a companion to add to the team
 
 
 class Player: Equatable {
@@ -24,7 +25,7 @@ class Player: Equatable {
     }
 
     /// max number of companions in team
-    let maxTeamCompanions = 3
+    private let maxTeamCompanions = 3
     
     /// Player's id
     var playerNumber: Int
@@ -118,7 +119,7 @@ class Player: Equatable {
      func displayTeam() {
     
         guard team.count != 0 else {
-            print("All Dead !")
+            print("🪦 All Dead ! ⚰️")
             return
         }
         
@@ -134,7 +135,7 @@ class Player: Equatable {
             } else {
                 weaponStrength = "\(companion.weapon.damage)"
             }
-            print("\(index + 1). \(companion.icon) \(companion.name). ❤️ Life: \(companion.currentLife) ---- 🥊 Weapon: \(companion.weapon.name) \(weaponStrength) ")
+            print("\(index + 1). \(companion.icon) \(companion.name.uppercased()). ❤️ Life: \(companion.currentLife) ---- 🥊 Weapon: \(companion.weapon.name) \(weaponStrength) ")
         }
     }
     
@@ -153,7 +154,7 @@ class Player: Equatable {
             if let index = Int(playerChoice), index <= team.count {
                 /// if choice is valid return companion
                 let chosenCompanion = team[index - 1]
-                print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name)")
+                print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name.uppercased())")
                 return chosenCompanion
             }
             /// if choice not valid inform player and return to selection

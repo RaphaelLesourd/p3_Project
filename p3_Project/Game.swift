@@ -72,7 +72,7 @@ class Game {
             enemyPlayer = playerOne
         }
         /// Inform player round number and  which player is current number
-        print("\n*** Round \(numberOfRounds) - Player \(currentPlayer?.playerNumber ?? 0) turn ***")
+        print("\n****\n*** ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.playerNumber ?? 0) TURN ***\n****")
         
         /// start the fight
         startFight()
@@ -82,23 +82,45 @@ class Game {
     
     private func startFight() {
         
+        /// Local variable to store  randomly found weapon
+        var foundBonusWeapon: Weapon?
+        
+        /// after at least 1 round of game
+        /// Present  to your fighter randomly a vault with another weapon
+        /// uses a random Number to present the vault before choosing the enemy
+        if numberOfRounds > 1 {
+            let randomNumber = Int.random(in: 0...4)
+            if randomNumber == 0 {
+                foundBonusWeapon = presentBonusVault()
+            }
+        }
+        
         /// Unwraps currentPlayer optional
         guard let currentPlayer = currentPlayer else { return }
         
         /// Prompt currentPlayer to choose a fighteer from his team
-        print("\nPlayer \(currentPlayer.playerNumber) Select who will fight for you:\n")
+        /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a companion and fight
+        if foundBonusWeapon == nil {
+            print("\nSelect a companion to attack your enemy:\n")
+        } else {
+            print("\nSelect a companion to give this bonus and to attack your enemy:\n")
+        }
+       
         
         /// Display player team
         currentPlayer.displayTeam()
         
         /// Await for selection and set companion to local  constant
         let selectedCompanion = currentPlayer.selectFighters(from: currentPlayer.team)
+    
+        let selectedCompanionInfos = "\(selectedCompanion.icon) \(selectedCompanion.name.uppercased())"
+
         
         /// if the selected companion  from class Wizzard
         if selectedCompanion is Wizzard {
             
             /// Confirm wizzard selection and prompt player to choose who to heal
-            print("You selected \(selectedCompanion.icon)\(selectedCompanion.name) the Wizzard\n💫 Choose who you'd like to heal:\n")
+            print("\(selectedCompanionInfos) the Wizzard, choose who you'd like to heal:\n")
             
             /// display  current player remaining team
             currentPlayer.displayTeam()
@@ -110,21 +132,16 @@ class Game {
             /// apply function to selected companion to be healed
             selectedCompanion.heal(companion: companionToBeHealed)
             
-            /// if selected companion NOT from Wizzard class (eg. from any other companion class)
+        /// if selected companion NOT from Wizzard class (eg. from any other companion class)
         } else {
             
-            /// after at least 1 round of game
-            /// Present  to your fighter randomly a vault with another weapon
-            /// uses a random bool to present the vault before choosing the enemy
-            if numberOfRounds > 1 {
-                let randomBool = Bool.random()
-                if randomBool == true {
-                    presentBonusVault(to: selectedCompanion)
-                }
+            if let foundBonusWeapon = foundBonusWeapon {
+                selectedCompanion.weapon = foundBonusWeapon
+                print("You're now using \(selectedCompanion.weapon.name), causing \(selectedCompanion.weapon.damage) points damages!\n")
             }
             
             /// Prompt player to choose who to attack
-            print("Ready to defeat the enemy? Choose who you'd like to attack:\n")
+            print("\(selectedCompanionInfos), choose who you'd like to attack:\n")
             
             /// unwrap enemyPlayer optional
             guard let enemyPlayer = enemyPlayer else {return}
@@ -169,28 +186,27 @@ class Game {
     
     
     /// present a bonus vault randomly
-    /// - Parameter companion: pass in the companion receiving the bonus
-    private func presentBonusVault(to companion: Companion) {
+    
+    private func presentBonusVault() -> Weapon {
         
         /// randomly picks a bonusWeapon array index
         let randomIndex = Int(arc4random_uniform(UInt32(bonusWeapons.count)))
         /// set selected companion's weapon with the random bonusweapon
-        companion.weapon = bonusWeapons[randomIndex]
-        /// Informs the player of the bonus found
+        let foundWeapon = bonusWeapons[randomIndex]
         print("""
 
         ✨----------------------------------------------------------✨
-            You found a vault containing a \(companion.weapon.name)
-        
-            It will give \(companion.weapon.damage)
-                points of damage to your enemy!
+        ✨ You found a vault containing a \(foundWeapon.name)
+        ✨
+        ✨ It will give \(foundWeapon.damage) points of damage to your enemy!
         ✨----------------------------------------------------------✨
 
-        \(companion.icon) \(companion.name.uppercased()) new weapon: \(companion.weapon.name) \(companion.weapon.damage)
+        
         """)
+        return foundWeapon
     }
  
-    
+   
     /// At the end of the game
     /// Display  who won the tournament
     /// Display player number and associated team remaining
@@ -204,16 +220,12 @@ class Game {
         /// - How many rounds played
         /// - Remaining companions for the wining team
         /// - Loser team show all companions are dead
-        print("""
-            --------------------------------------------
-
-            ⭐️⭐️ ⭐️ Player \(playerNumber) WON ⭐️⭐️⭐️
-
-            """)
+        print("\n\n⭐️⭐️⭐️ Player \(playerNumber) WON in \(numberOfRounds) rounds ⭐️⭐️⭐️\n")
         print("Player \(playerOne.playerNumber) Team")
         playerOne.displayTeam()
         print("\nPlayer \(playerTwo.playerNumber) Team")
         playerTwo.displayTeam()
+       
     }
     
 }

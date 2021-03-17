@@ -22,7 +22,7 @@ class Game {
     private var numberOfRounds = Int()
     
     /// Array of bonus weapons
-    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 100, healingPower: 0),
+    private let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 100, healingPower: 0),
                         Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
                         Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
                         Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),
@@ -139,26 +139,17 @@ class Game {
             print("You're attacking \(enemyToFight.icon) \(enemyToFight.name) with your \(selectedCompanion.weapon.name)")
             /// Call for fight func function from the selected companion class herited from Companion super class
             selectedCompanion.fight(enemy: enemyToFight)
-            
-            /// check enemy  companion currentLife , if at 0 remove from  enemyteam array
-            if enemyToFight.currentLife == 0 {
-                
-                /// uses name to compare to get the array index to be removed
-                if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemyToFight.name }) {
-                    enemyPlayer.team.remove(at: index)
-                }
-            }
         }
         
         /// At the end of the fight cycle check of any of the team array is empty
-        verifyTeamsEmpty()
+        verifyTeamsDead()
         
     }
     
     
-    private func verifyTeamsEmpty() {
+    private func verifyTeamsDead() {
         /// Check if player's teams array are empty
-        if playerOne.team.count == 0 || playerTwo.team.count == 0 {
+        if playerOne.teamDead() || playerTwo.teamDead() {
             /// If one team is empty then game over , display game stats
             displayGameStats()
         } else {
@@ -167,6 +158,8 @@ class Game {
         }
     }
     
+
+   
     
     /// present a bonus vault randomly
     /// - Parameter companion: pass in the companion receiving the bonus

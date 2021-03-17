@@ -31,13 +31,14 @@ class Player: Equatable {
     var playerNumber: Int
     /// array storing all companions in player's team
     var team = [Companion]()
-    
+    var numberOfGameWon = 0 
     /// Instantiate a player
     /// - Parameter playerNumber: either player 1 or player 2
     init(playerNumber: Int) {
         self.playerNumber = playerNumber
     }
     
+    // MARK: - Team management
     
     /// Create player's team flow
     ///     - Display Intro message
@@ -97,32 +98,13 @@ class Player: Equatable {
                 print("⛔️ Oups! I don't understand your choice.")
             }
         }
-        
-        
-    }
-    
-    // MARK: - Display Info
-    
-    /// - Menu with all 4 characters choice and their  characteristics
-    private func displayCompanionChoiceMenu() {
-        print("""
-            
-            1. \(Colossus.icon) Colossus has \(Colossus.maxLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.maxLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
-            3. \(Warrior.icon) Warrior has \(Warrior.maxLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
-            4. \(Wizzard.icon) Wizzard has \(Warrior.maxLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
-            
-            """)
     }
     
     
+    
+    /// Display player's team
      func displayTeam() {
     
-        guard team.count != 0 else {
-            print("🪦 All Dead ! ⚰️")
-            return
-        }
-        
         //enumarate team array to display remaining companions
         for (index, companion) in team.enumerated() {
             
@@ -140,30 +122,67 @@ class Player: Equatable {
     }
     
     
+    /// Check if players team's companion life level
+    /// - Returns: true  if the sum of all lives are 0 or false
+    func teamDead() -> Bool {
+        /// Local variable tracking the total lives amount
+        var sumOfLives = Int()
+        /// add each companions currentLife
+        for companion in team {
+            sumOfLives += companion.currentLife
+        }
+        return sumOfLives == 0
+    }
+     
     
+    
+    // MARK: - Fighter selection
     
     /// Player selects his companion from his team or enemys from other team
     /// - Parameter team: pass in team which character is selected from
     /// - Returns: return selected charater
-     func selectFighters(from team: [Companion]) -> Companion {
-        /// Prompt player to make a choice
-        if let playerChoice = readLine() {
-            /// convert string to Int
-            /// check if player choice is valid by comparing input to team count
-        
-            if let index = Int(playerChoice), index <= team.count {
-                /// if choice is valid return companion
-                let chosenCompanion = team[index - 1]
-                print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name.uppercased())")
-                return chosenCompanion
-            }
-            /// if choice not valid inform player and return to selection
-            print("oups! this choice does not exist")
-        }
-        return selectFighters(from: team)
-    }
+    func selectFighters(from team: [Companion]) -> Companion {
+       /// Prompt player to make a choice
+       if let playerChoice = readLine() {
+           /// convert string to Int
+           /// check if player choice is valid by comparing input to team count
+       
+           if let index = Int(playerChoice), index <= team.count {
+               /// if choice is valid return companion
+               let chosenCompanion = team[index - 1]
+             ///check if this companion is dead
+               if chosenCompanion.currentLife == 0 {
+                   print("\nThis is a DEAD person, choose another")
+                   return selectFighters(from: team)
+               } else {
+                   print("\nYou chose \(chosenCompanion.icon) \(chosenCompanion.name.uppercased())")
+                   return chosenCompanion
+               }
+              
+           }
+           /// if choice not valid inform player and return to selection
+           print("oups! this choice does not exist")
+       }
+       return selectFighters(from: team)
+   }
+  
    
     
+    // MARK: - Display Info
+    
+    /// - Menu with all 4 characters choice and their  characteristics
+    private func displayCompanionChoiceMenu() {
+        print("""
+            
+            1. \(Colossus.icon) Colossus has \(Colossus.maxLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.maxLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
+            3. \(Warrior.icon) Warrior has \(Warrior.maxLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
+            4. \(Wizzard.icon) Wizzard has \(Warrior.maxLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
+            
+            """)
+    }
+  
+   
 }
 
 

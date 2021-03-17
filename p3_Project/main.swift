@@ -7,5 +7,8 @@
 
 import Foundation
 
+/// declare a game
+/// and class for a game to start
+
 let game = Game()
 game.start()

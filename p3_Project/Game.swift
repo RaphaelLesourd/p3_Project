@@ -21,10 +21,17 @@ class Game {
     /// Tracks number of rounds
     private var numberOfRounds = Int()
     
+    /// Array of bonus weapons
+    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 100, healingPower: 0),
+                        Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
+                        Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
+                        Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),
+                        Weapon(name: "🧻 Toilet Paper Roll", damages: 10, healingPower: 0),
+    ]
     
     /// The game starts
     func start() {
-        
+        // Reset number of rounds 
         numberOfRounds = 0
         
         displayIntroMessage()
@@ -35,6 +42,18 @@ class Game {
         
         managePlayerTurns()
         
+    }
+    
+    /// At the beginning of each game  display an intro message
+    private func displayIntroMessage() {
+        print("""
+            Welcome to Fighter's game...
+            Before you can defeat your sworn enemy,
+            you need to surround yourself
+            with companions to fight for you.
+
+
+            """)
     }
     
     /// This function manages turn by turn current player and ennemy
@@ -59,20 +78,6 @@ class Game {
         startFight()
         
     }
-    
-    
-    
-    private func displayIntroMessage() {
-        print("""
-            Welcome to Fighter's game...
-            Before you can defeat your sworn enemy,
-            you need to surround yourself
-            with companions to fight for you.
-
-
-            """)
-    }
-    
     
     
     private func startFight() {
@@ -127,7 +132,7 @@ class Game {
             /// Display enemy's team
             enemyPlayer.displayTeam()
             
-           /// Await player to choose enemy's team member and assign to local constant
+            /// Await player to choose enemy's team member and assign to local constant
             let enemyToFight = enemyPlayer.selectFighters(from: enemyPlayer.team)
             
             /// Confirm player with selected choice
@@ -145,13 +150,14 @@ class Game {
             }
         }
         
+        /// At the end of the fight cycle check of any of the team array is empty
         verifyTeamsEmpty()
         
     }
     
     
     private func verifyTeamsEmpty() {
-        /// Check if player's teams is empty
+        /// Check if player's teams array are empty
         if playerOne.team.count == 0 || playerTwo.team.count == 0 {
             /// If one team is empty then game over , display game stats
             displayGameStats()
@@ -161,19 +167,16 @@ class Game {
         }
     }
     
-  
     
     /// present a bonus vault randomly
+    /// - Parameter companion: pass in the companion receiving the bonus
     private func presentBonusVault(to companion: Companion) {
         
-       let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 100, healingPower: 0),
-                           Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
-                           Weapon(name: "🟢 Magic Dust Pouch", damages: 30, healingPower: 0),
-                           Weapon(name: "🍬 Candy Of Death", damages: 20, healingPower: 0),
-       ]
-        
+        /// randomly picks a bonusWeapon array index
         let randomIndex = Int(arc4random_uniform(UInt32(bonusWeapons.count)))
+        /// set selected companion's weapon with the random bonusweapon
         companion.weapon = bonusWeapons[randomIndex]
+        /// Informs the player of the bonus found
         print("""
 
         ✨----------------------------------------------------------✨
@@ -185,13 +188,8 @@ class Game {
 
         \(companion.icon) \(companion.name.uppercased()) new weapon: \(companion.weapon.name) \(companion.weapon.damage)
         """)
-        
-        
-        
     }
-    
-    
-    
+ 
     
     /// At the end of the game
     /// Display  who won the tournament
@@ -200,6 +198,12 @@ class Game {
         
         /// check each team count with this tuple and  shows player number that won the game
         let playerNumber = playerOne.team.count > playerTwo.team.count ? playerOne.playerNumber : playerTwo.playerNumber
+         
+        /// Display end of game board with
+        /// - Which player won the game
+        /// - How many rounds played
+        /// - Remaining companions for the wining team
+        /// - Loser team show all companions are dead
         print("""
             --------------------------------------------
 
@@ -211,7 +215,6 @@ class Game {
         print("\nPlayer \(playerTwo.playerNumber) Team")
         playerTwo.displayTeam()
     }
-    
     
 }
 

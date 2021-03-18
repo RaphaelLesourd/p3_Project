@@ -7,8 +7,9 @@
 
 import Foundation
 
+/// Class manages all functions for  the game, turns , fight , check team status and  displays winner with stats
+
 class Game {
-    
     
     /// Instantiate 2 players with a player Id
     private let playerOne = Player(playerNumber: 1)
@@ -56,6 +57,8 @@ class Game {
             """)
     }
     
+    
+    
     /// This function manages turn by turn current player and ennemy
     /// check if current player is nil  or if current player is playre 2
     /// if nil   assign currentplayer and enemy player
@@ -78,8 +81,7 @@ class Game {
         startFight()
         
     }
-    
-    
+        
     private func startFight() {
         
         /// Local variable to store  randomly found weapon
@@ -135,8 +137,11 @@ class Game {
         /// if selected companion NOT from Wizzard class (eg. from any other companion class)
         } else {
             
+            /// display found bonus weapon to non wizzard companion
             if let foundBonusWeapon = foundBonusWeapon {
+                /// Unwraps optional , if not nil weapon is changed for foundbonusweapon
                 selectedCompanion.weapon = foundBonusWeapon
+                /// infor player  the new weapon is in use for this companion
                 print("You're now using \(selectedCompanion.weapon.name), causing \(selectedCompanion.weapon.damage) points damages!\n")
             }
             
@@ -159,7 +164,6 @@ class Game {
             
             /// check enemy  companion currentLife , if at 0 remove from  enemyteam array
             if enemyToFight.currentLife == 0 {
-                
                 /// uses name to compare to get the array index to be removed
                 if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemyToFight.name }) {
                     enemyPlayer.team.remove(at: index)
@@ -167,26 +171,37 @@ class Game {
             }
         }
         
-        /// At the end of the fight cycle check of any of the team array is empty
-        verifyTeamsEmpty()
+        /// At the end of the fight cycle, check of any of the team array is empty
+        verifyTeamStatus()
         
     }
     
-    
-    private func verifyTeamsEmpty() {
+    /// func to check 3 possible end of fight scenarios checks:
+    /// - one team has no companion left : game ends with a winner
+    /// - both teams have only wizzard left : game ends no winner
+    /// - none of the above cases are true , the game continue with another round
+    private func verifyTeamStatus() {
+        
         /// Check if player's teams array are empty
-        if playerOne.team.count == 0 || playerTwo.team.count == 0 {
+        if playerOne.team.isEmpty || playerTwo.team.isEmpty {
             /// If one team is empty then game over , display game stats
-            displayGameStats()
+            displayEndGameStats()
+            
+            /// check if both players's team have only a wizzard let
+        } else if playerOne.onlyWizzardInTeamCheck() == true && playerTwo.onlyWizzardInTeamCheck() == true {
+           
+            displayEndGameMessageNoWinner()
+            
         } else {
-            /// both team no empty
+            /// go to next round, swap current player and enemy
             managePlayerTurns()
         }
     }
     
     
-    /// present a bonus vault randomly
+    // MARK: - Bonus vault
     
+    /// present a bonus vault randomly
     private func presentBonusVault() -> Weapon {
         
         /// randomly picks a bonusWeapon array index
@@ -206,11 +221,13 @@ class Game {
         return foundWeapon
     }
  
+    
+    // MARK: - End of game
    
     /// At the end of the game
     /// Display  who won the tournament
     /// Display player number and associated team remaining
-    private func displayGameStats() {
+    private func displayEndGameStats() {
         
         /// check each team count with this tuple and  shows player number that won the game
         let playerNumber = playerOne.team.count > playerTwo.team.count ? playerOne.playerNumber : playerTwo.playerNumber
@@ -228,14 +245,13 @@ class Game {
        
     }
     
+    private func displayEndGameMessageNoWinner() {
+            print("""
+
+            ------------------------------------------------------------------
+              No winners, only wizzards remains and they can't kill each other
+            ------------------------------------------------------------------
+
+            """)
+    }
 }
-
-
-/// Use this extension if project needs to comply with swift version below 4.2
-
-//
-//extension Bool {
-//    static func random() -> Bool {
-//           return arc4random_uniform(2) == 0
-//       }
-//}

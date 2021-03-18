@@ -60,7 +60,6 @@ class Companion {
     }
     
     
-    
     /// heal team members
     /// add wizzard weapon (magic wand) healing points
     /// - Parameter teamPlayer: pass in templayer companion
@@ -71,7 +70,12 @@ class Companion {
             /// if reaches max Life then current Life equate to max Life
             if companion.currentLife > companion.maxLife {
                 companion.currentLife = companion.maxLife
-                print("🧬 Your Life is back to full! 🧬")
+                print("""
+
+                ---------------------------------
+                🧬 Your Life is back to full! 🧬
+                ---------------------------------
+                """)
             }
         }
     }

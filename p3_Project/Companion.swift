@@ -55,7 +55,7 @@ class Companion {
 
             """)
         } else {
-            print("Great Job!, \(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.\n")
+            print("\(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.\n")
         }
     }
     

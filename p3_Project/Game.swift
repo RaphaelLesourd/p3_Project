@@ -23,7 +23,7 @@ class Game {
     private var numberOfRounds = Int()
     
     /// Array of bonus weapons
-    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 100, healingPower: 0),
+    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 90, healingPower: 0),
                         Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
                         Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
                         Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),
@@ -48,11 +48,12 @@ class Game {
     /// At the beginning of each game  display an intro message
     private func displayIntroMessage() {
         print("""
+            ----------------------------------------
             Welcome to Fighter's game...
             Before you can defeat your sworn enemy,
             you need to surround yourself
             with companions to fight for you.
-
+            ----------------------------------------
 
             """)
     }
@@ -75,7 +76,7 @@ class Game {
             enemyPlayer = playerOne
         }
         /// Inform player round number and  which player is current number
-        print("\n****\n*** ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.playerNumber ?? 0) TURN ***\n****")
+        print("\n****\n*******  ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.playerNumber ?? 0) TURN\n****")
         
         /// start the fight
         startFight()
@@ -103,7 +104,8 @@ class Game {
         /// Prompt currentPlayer to choose a fighteer from his team
         /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a companion and fight
         if foundBonusWeapon == nil {
-            print("\nSelect a companion to attack your enemy:\n")
+            print("\nSelect a companion to attack your enemy")
+            print("Wizzads can only heal!\n")
         } else {
             print("\nSelect a companion to give this bonus and to attack your enemy:\n")
         }
@@ -115,7 +117,7 @@ class Game {
         /// Await for selection and set companion to local  constant
         let selectedCompanion = currentPlayer.selectFighters(from: currentPlayer.team)
     
-        let selectedCompanionInfos = "\(selectedCompanion.icon) \(selectedCompanion.name.uppercased())"
+        let selectedCompanionInfos = "\(selectedCompanion.icon) \(selectedCompanion.name)"
 
         
         /// if the selected companion  from class Wizzard
@@ -142,11 +144,11 @@ class Game {
                 /// Unwraps optional , if not nil weapon is changed for foundbonusweapon
                 selectedCompanion.weapon = foundBonusWeapon
                 /// infor player  the new weapon is in use for this companion
-                print("You're now using \(selectedCompanion.weapon.name), causing \(selectedCompanion.weapon.damage) points damages!\n")
+                print("\(selectedCompanion.weapon.name.uppercased()) is yours\n")
             }
             
             /// Prompt player to choose who to attack
-            print("\(selectedCompanionInfos), choose who you'd like to attack:\n")
+            print("\(selectedCompanionInfos) you have \(selectedCompanion.currentLife) life points left, you're carrying \(selectedCompanion.weapon.name.uppercased()), causing \(selectedCompanion.weapon.damage) points damages!\nWho you'd like to attack ?\n")
             
             /// unwrap enemyPlayer optional
             guard let enemyPlayer = enemyPlayer else {return}
@@ -158,7 +160,7 @@ class Game {
             let enemyToFight = enemyPlayer.selectFighters(from: enemyPlayer.team)
             
             /// Confirm player with selected choice
-            print("You're attacking \(enemyToFight.icon) \(enemyToFight.name) with your \(selectedCompanion.weapon.name)")
+            print("\(enemyToFight.icon) \(enemyToFight.name) was hurt by your \(selectedCompanion.weapon.name)")
             /// Call for fight func function from the selected companion class herited from Companion super class
             selectedCompanion.fight(enemy: enemyToFight)
             

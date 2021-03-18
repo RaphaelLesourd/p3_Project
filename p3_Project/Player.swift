@@ -48,11 +48,11 @@ class Player: Equatable {
     ///     - Add player to team
     func createTeam() {
         
-        print("*** 👩‍👦 PLAYER \(playerNumber) Create your team ***")
+        print("*** 👩‍👦 PLAYER \(playerNumber) Create your team with \(maxTeamCompanions) companions")
 
         displayCompanionChoiceMenu()
         
-        print("Please select \(maxTeamCompanions) companions to join your team:")
+        print("Enter your choice choice below:")
         
         
         /// while loop requesting companion until team contains maxTeamCompanions (3)
@@ -64,7 +64,7 @@ class Player: Equatable {
                 
                 var companion: Companion?
                 /// prompt player to give a name to this companion 
-                let name = companionNameRequest()
+                let name = companionNameRequest().uppercased()
                 
                 switch userChoice {
                 case "1":
@@ -98,8 +98,7 @@ class Player: Equatable {
                 print("⛔️ Oups! I don't understand your choice.")
             }
         }
-        
-        
+
     }
     
     // MARK: - Display Info
@@ -136,7 +135,7 @@ class Player: Equatable {
             } else {
                 weaponStrength = "\(companion.weapon.damage)"
             }
-            print("\(index + 1). \(companion.icon) \(companion.name.uppercased()). ❤️ Life: \(companion.currentLife) ---- 🥊 Weapon: \(companion.weapon.name) \(weaponStrength) ")
+            print("\(index + 1). \(companion.icon) \(companion.name.uppercased()). ❤️ Life: \(companion.currentLife)      🥊 Weapon: \(companion.weapon.name) \(weaponStrength) ")
         }
     }
     
@@ -180,7 +179,7 @@ class Player: Equatable {
     /// return name if not empty and not in the team already
     private func companionNameRequest() -> String {
         /// Prompt player to give a name
-        print("💭 Choose a name for this character:")
+        print("💭 Choose a name:")
         
         /// Check is input is empty and if name already exits in the team
         if let input = readLine() {

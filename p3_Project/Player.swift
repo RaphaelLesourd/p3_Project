@@ -38,6 +38,7 @@ class Player: Equatable {
         self.playerNumber = playerNumber
     }
     
+    // MARK: - Team creation
     
     /// Create player's team flow
     ///     - Display Intro message
@@ -163,11 +164,17 @@ class Player: Equatable {
     }
    
     
-}
+    /// func checking if wizzard on is present
+    /// to perfom in game class a check if  both team have wizzard.
+    /// the game would finish to prevent no win situation as wizzard dont attack
+    /// - Returns: true/false statement if only wizzard remain
+    func onlyWizzardInTeamCheck() -> Bool {
+        return team.count == 1 && team.first is Wizzard
+    }
 
 
-// MARK: - Character Name Request functions
-extension Player {
+// MARK: - Name Request
+
     
     /// Request user input for character's name
     /// return name if not empty and not in the team already
@@ -177,7 +184,7 @@ extension Player {
         
         /// Check is input is empty and if name already exits in the team
         if let input = readLine() {
-            if !input.isEmpty, !charactersNameExist(for: input) {
+            if !input.isEmpty, !companionNameExist(for: input) {
                 /// case name not taken: return input
                 return input
             }
@@ -190,7 +197,7 @@ extension Player {
     
     /// check is character with same name already exists in the team
     /// returns  true or false if team already contains name
-    private func charactersNameExist(for name: String) -> Bool {
+    private func companionNameExist(for name: String) -> Bool {
         if team.contains(where: {$0.name == name}) {
             return true
         }

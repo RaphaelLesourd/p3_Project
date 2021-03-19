@@ -37,8 +37,11 @@ class Game {
         
         displayIntroMessage()
         
-        /// each player create a team
+        /// Each player choose a name and create a team
+        playerOne.setName()
         playerOne.createTeam()
+        
+        playerTwo.setName()
         playerTwo.createTeam()
         
         managePlayerTurns()
@@ -52,7 +55,7 @@ class Game {
             Welcome to Fighter's game...
             Before you can defeat your sworn enemy,
             you need to surround yourself
-            with companions to fight for you.
+            with characters to fight for you.
             ----------------------------------------
 
             """)
@@ -76,7 +79,7 @@ class Game {
             enemyPlayer = playerOne
         }
         /// Inform player round number and  which player is current number
-        print("\n****\n*******  ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.playerNumber ?? 0) TURN\n****")
+        print("\n****\n*******  ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.name ?? "") TURN\n****")
         
         /// start the fight
         startFight()
@@ -102,53 +105,53 @@ class Game {
         guard let currentPlayer = currentPlayer else { return }
         
         /// Prompt currentPlayer to choose a fighteer from his team
-        /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a companion and fight
+        /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a character and fight
         if foundBonusWeapon == nil {
-            print("\nSelect a companion to attack your enemy")
+            print("\nSelect a character to attack your enemy")
             print("Wizzads can only heal!\n")
         } else {
-            print("\nSelect a companion to give this bonus and to attack your enemy:\n")
+            print("\nSelect a character to give this bonus and to attack your enemy:\n")
         }
        
         
         /// Display player team
         currentPlayer.displayTeam()
         
-        /// Await for selection and set companion to local  constant
-        let selectedCompanion = currentPlayer.selectFighters(from: currentPlayer.team)
+        /// Await for selection and set character to local  constant
+        let selectedCharacter = currentPlayer.selectAttacker(from: currentPlayer.team)
     
-        let selectedCompanionInfos = "\(selectedCompanion.icon) \(selectedCompanion.name)"
+        let selectedCharacterInfos = "\(selectedCharacter.icon) \(selectedCharacter.name)"
 
         
-        /// if the selected companion  from class Wizzard
-        if selectedCompanion is Wizzard {
+        /// if the selected character  from class Wizzard
+        if selectedCharacter is Wizzard {
             
             /// Confirm wizzard selection and prompt player to choose who to heal
-            print("\(selectedCompanionInfos) the Wizzard, choose who you'd like to heal:\n")
+            print("\(selectedCharacterInfos) the Wizzard, choose who you'd like to heal:\n")
             
             /// display  current player remaining team
             currentPlayer.displayTeam()
             
-            /// Await for player selection and set local variable with a companion to heal
-            let companionToBeHealed = currentPlayer.selectFighters(from: currentPlayer.team)
+            /// Await for player selection and set local variable with a character to heal
+            let characterToBeHealed = currentPlayer.selectAttacker(from: currentPlayer.team)
             
-            /// call for heal func from the selected companion , in this case the wizzard herited from Companion super class
-            /// apply function to selected companion to be healed
-            selectedCompanion.heal(companion: companionToBeHealed)
+            /// call for heal func from the selected character , in this case the wizzard herited from character super class
+            /// apply function to selected character to be healed
+            selectedCharacter.heal(character: characterToBeHealed)
             
-        /// if selected companion NOT from Wizzard class (eg. from any other companion class)
+        /// if selected character NOT from Wizzard class (eg. from any other character class)
         } else {
             
-            /// display found bonus weapon to non wizzard companion
+            /// display found bonus weapon to non wizzard character
             if let foundBonusWeapon = foundBonusWeapon {
                 /// Unwraps optional , if not nil weapon is changed for foundbonusweapon
-                selectedCompanion.weapon = foundBonusWeapon
-                /// infor player  the new weapon is in use for this companion
-                print("\(selectedCompanion.weapon.name.uppercased()) is yours\n")
+                selectedCharacter.weapon = foundBonusWeapon
+                /// infor player  the new weapon is in use for this character
+                print("\(selectedCharacter.weapon.name.uppercased()) is yours\n")
             }
             
             /// Prompt player to choose who to attack
-            print("\(selectedCompanionInfos) you have \(selectedCompanion.currentLife) life points left, you're carrying \(selectedCompanion.weapon.name.uppercased()), causing \(selectedCompanion.weapon.damage) points damages!\nWho you'd like to attack ?\n")
+            print("\(selectedCharacterInfos) you have \(selectedCharacter.life) life points left, you're carrying \(selectedCharacter.weapon.name.uppercased()), causing \(selectedCharacter.weapon.damage) points damages!\nWho you'd like to attack ?\n")
             
             /// unwrap enemyPlayer optional
             guard let enemyPlayer = enemyPlayer else {return}
@@ -157,15 +160,15 @@ class Game {
             enemyPlayer.displayTeam()
             
             /// Await player to choose enemy's team member and assign to local constant
-            let enemyToFight = enemyPlayer.selectFighters(from: enemyPlayer.team)
+            let enemyToFight = enemyPlayer.selectAttacker(from: enemyPlayer.team)
             
             /// Confirm player with selected choice
-            print("\(enemyToFight.icon) \(enemyToFight.name) was hurt by your \(selectedCompanion.weapon.name)")
-            /// Call for fight func function from the selected companion class herited from Companion super class
-            selectedCompanion.fight(enemy: enemyToFight)
+            print("\(enemyToFight.icon) \(enemyToFight.name) was hurt by your \(selectedCharacter.weapon.name)")
+            /// Call for fight func function from the selected character class herited from character super class
+            selectedCharacter.fight(character: enemyToFight)
             
-            /// check enemy  companion currentLife , if at 0 remove from  enemyteam array
-            if enemyToFight.currentLife == 0 {
+            /// check enemy  character currentLife , if at 0 remove from  enemyteam array
+            if enemyToFight.life == 0 {
                 /// uses name to compare to get the array index to be removed
                 if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemyToFight.name }) {
                     enemyPlayer.team.remove(at: index)
@@ -179,7 +182,7 @@ class Game {
     }
     
     /// func to check 3 possible end of fight scenarios checks:
-    /// - one team has no companion left : game ends with a winner
+    /// - one team has no character left : game ends with a winner
     /// - both teams have only wizzard left : game ends no winner
     /// - none of the above cases are true , the game continue with another round
     private func verifyTeamStatus() {
@@ -208,7 +211,7 @@ class Game {
         
         /// randomly picks a bonusWeapon array index
         let randomIndex = Int(arc4random_uniform(UInt32(bonusWeapons.count)))
-        /// set selected companion's weapon with the random bonusweapon
+        /// set selected character's weapon with the random bonusweapon
         let foundWeapon = bonusWeapons[randomIndex]
         print("""
 
@@ -232,17 +235,17 @@ class Game {
     private func displayEndGameStats() {
         
         /// check each team count with this tuple and  shows player number that won the game
-        let playerNumber = playerOne.team.count > playerTwo.team.count ? playerOne.playerNumber : playerTwo.playerNumber
+        let playerNumber = playerOne.team.count > playerTwo.team.count ? playerOne.name : playerTwo.name
          
         /// Display end of game board with
         /// - Which player won the game
         /// - How many rounds played
-        /// - Remaining companions for the wining team
-        /// - Loser team show all companions are dead
+        /// - Remaining characters for the wining team
+        /// - Loser team show all characters are dead
         print("\n\n⭐️⭐️⭐️ Player \(playerNumber) WON in \(numberOfRounds) rounds ⭐️⭐️⭐️\n")
-        print("Player \(playerOne.playerNumber) Team")
+        print("Player \(playerOne.name) Team")
         playerOne.displayTeam()
-        print("\nPlayer \(playerTwo.playerNumber) Team")
+        print("\nPlayer \(playerTwo.name) Team")
         playerTwo.displayTeam()
        
     }

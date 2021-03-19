@@ -12,10 +12,10 @@ import Foundation
 /// damages: Low
 /// healing: None
 
-class Colossus: Companion {
+class Colossus: Character {
     
     /// Character own max life point
-    static let maxLife = 100
+    static let life = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Punch", damages: 5, healingPower: 0)
     static let icon = "💪"
@@ -24,8 +24,8 @@ class Colossus: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Colossus.icon,
-                   maximumLife: Colossus.maxLife,
-                   currentLife: Colossus.maxLife,
+                   life: Colossus.life,
+                   canHeal: false,
                    weapon: Colossus.weapon)
     }
 }

@@ -9,26 +9,26 @@ import Foundation
 
 
 /// This class defines the companions properties and abilities
-class Companion {
+class Character {
     
     var name: String
     var icon: String
-    var maxLife: Int
-    var currentLife: Int
+    var life: Int
+    var canHeal: Bool
     var weapon: Weapon
+    
     
     
     /// Character's properties
     /// - Parameters:
     ///   - name: companion's name given by the player
-    ///   - maximumLife: Life point at start of each game
-    ///   - currentLife: tracks current Life of the companions
+    ///   - life: tracks current Life of the companions
     ///   - weapon: default weapon carried by the companion
-    init(name: String, icon: String, maximumLife: Int, currentLife: Int, weapon: Weapon) {
+    init(name: String, icon: String, life: Int, canHeal: Bool, weapon: Weapon) {
         self.name = name
         self.icon = icon
-        self.maxLife = maximumLife
-        self.currentLife = currentLife
+        self.life = life
+        self.canHeal = canHeal
         self.weapon = weapon
     }
     
@@ -39,23 +39,23 @@ class Companion {
     /// attacks enemies
     /// reduces eneny's currentLifeby weapon damage point
     /// - Parameter enemy: pass in oponent companion
-    func fight(enemy: Companion) {
-        enemy.currentLife -= self.weapon.damage
+    func fight(character: Character) {
+        character.life -= self.weapon.damage
         
         /// if enemy's current Life equate 0 or less
         /// set currentLife at 0
         /// inform player companions dead
-        if enemy.currentLife <= 0 {
-            enemy.currentLife = 0
+        if character.life <= 0 {
+            character.life = 0
             print("""
 
             ----------------------------------------
-            \(enemy.icon) \(enemy.name) is ⚰️ DEAD !
+            \(character.icon) \(character.name) is ⚰️ DEAD !
             ----------------------------------------
 
             """)
         } else {
-            print("\(enemy.icon) \(enemy.name) life is down to \(enemy.currentLife) points.\n")
+            print("\(character.icon) \(character.name) life is down to \(character.life) points.\n")
         }
     }
     
@@ -63,20 +63,17 @@ class Companion {
     /// heal team members
     /// add wizzard weapon (magic wand) healing points
     /// - Parameter teamPlayer: pass in templayer companion
-    func heal(companion: Companion) {
-        if self.weapon.healingPower > 0 {
-            companion.currentLife += self.weapon.healingPower
+    func heal(character: Character) {
+        if self.canHeal {
+            character.life += self.weapon.healingPower
             
             /// if reaches max Life then current Life equate to max Life
-            if companion.currentLife > companion.maxLife {
-                companion.currentLife = companion.maxLife
                 print("""
 
                 ---------------------------------
-                🧬 Your Life is back to full! 🧬
+                🧬 Your Life is now \(character.life)! 🧬
                 ---------------------------------
                 """)
-            }
         }
     }
     

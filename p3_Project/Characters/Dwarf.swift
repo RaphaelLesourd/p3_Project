@@ -12,10 +12,10 @@ import Foundation
 /// damages: high
 /// healing: None
 
-class Dwarf: Companion {
+class Dwarf: Character {
     
     /// Character own max life point
-    static let maxLife = 50
+    static let life = 50
     /// Character's weapon
     static let weapon = Weapon(name: "Axe", damages: 50, healingPower: 0)
     static let icon = "🧞‍♀️"
@@ -24,8 +24,8 @@ class Dwarf: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Dwarf.icon,
-                   maximumLife: Dwarf.maxLife,
-                   currentLife: Dwarf.maxLife,
+                   life: Dwarf.life,
+                   canHeal: false,
                    weapon: Dwarf.weapon)
     }
 }

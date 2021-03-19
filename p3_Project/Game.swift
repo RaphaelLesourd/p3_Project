@@ -22,13 +22,6 @@ class Game {
     /// Tracks number of rounds
     private var numberOfRounds = Int()
     
-    /// Array of bonus weapons
-    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 90, healingPower: 0),
-                        Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
-                        Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
-                        Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),
-                        Weapon(name: "🧻 Toilet Paper Roll", damages: 10, healingPower: 0),
-    ]
     
     /// The game starts
     func start() {
@@ -89,24 +82,16 @@ class Game {
     private func startFight() {
         
         /// Local variable to store  randomly found weapon
-        var foundBonusWeapon: Weapon?
-        
-        /// after at least 1 round of game
-        /// Present  to your fighter randomly a vault with another weapon
-        /// uses a random Number to present the vault before choosing the enemy
-        if numberOfRounds > 1 {
-            let randomNumber = Int.random(in: 0...4)
-            if randomNumber == 0 {
-                foundBonusWeapon = presentBonusVault()
-            }
-        }
+        let bonus = Bonus()
+        let randomBonusWeapon = bonus.presentBonusVault(for: numberOfRounds)
+      
         
         /// Unwraps currentPlayer optional
         guard let currentPlayer = currentPlayer else { return }
         
         /// Prompt currentPlayer to choose a fighteer from his team
         /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a character and fight
-        if foundBonusWeapon == nil {
+        if randomBonusWeapon == nil {
             print("\nSelect a character to attack your enemy")
             print("Wizzads can only heal!\n")
         } else {
@@ -143,7 +128,7 @@ class Game {
         } else {
             
             /// display found bonus weapon to non wizzard character
-            if let foundBonusWeapon = foundBonusWeapon {
+            if let foundBonusWeapon = randomBonusWeapon {
                 /// Unwraps optional , if not nil weapon is changed for foundbonusweapon
                 selectedCharacter.weapon = foundBonusWeapon
                 /// infor player  the new weapon is in use for this character
@@ -204,29 +189,7 @@ class Game {
     }
     
     
-    // MARK: - Bonus vault
-    
-    /// present a bonus vault randomly
-    private func presentBonusVault() -> Weapon {
-        
-        /// randomly picks a bonusWeapon array index
-        let randomIndex = Int(arc4random_uniform(UInt32(bonusWeapons.count)))
-        /// set selected character's weapon with the random bonusweapon
-        let foundWeapon = bonusWeapons[randomIndex]
-        print("""
-
-        ✨----------------------------------------------------------✨
-        ✨ You found a vault containing a \(foundWeapon.name)
-        ✨
-        ✨ It will give \(foundWeapon.damage) points of damage to your enemy!
-        ✨----------------------------------------------------------✨
-
-        
-        """)
-        return foundWeapon
-    }
- 
-    
+  
     // MARK: - End of game
    
     /// At the end of the game

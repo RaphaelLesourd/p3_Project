@@ -11,7 +11,7 @@ import Foundation
 class Bonus {
     
     /// Array of bonus weapons
-    let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 90, healingPower: 0),
+    private let bonusWeapons = [Weapon(name: "🔮 Destro Stone", damages: 90, healingPower: 0),
                         Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
                         Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
                         Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),

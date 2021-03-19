@@ -14,17 +14,19 @@ import Foundation
 
 class Colossus: Character {
     
-    /// Character own max life point
-    static let life = 100
+   
+    /// Character  initial full life
+    static let fullLife = 80
     /// Character's weapon
-    static let weapon = Weapon(name: "Punch", damages: 5, healingPower: 0)
+    static let weapon = Weapon(name: "Punch", damages: 15, healingPower: 0)
     static let icon = "💪"
     
     /// - Parameter name: name given by the player
     init(name: String) {
         super.init(name: name,
                    icon: Colossus.icon,
-                   life: Colossus.life,
+                   life: Colossus.fullLife,
+                   maxLife: Colossus.fullLife,
                    canHeal: false,
                    weapon: Colossus.weapon)
     }

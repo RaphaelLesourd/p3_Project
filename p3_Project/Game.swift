@@ -22,6 +22,7 @@ class Game {
     /// Tracks number of rounds
     private var numberOfRounds = Int()
     
+    let bonus = Bonus()
     
     /// The game starts
     func start() {
@@ -37,7 +38,8 @@ class Game {
         playerTwo.setName()
         playerTwo.createTeam()
         
-        managePlayerTurns()
+        /// Assign turn
+        assignPlayerTurns()
         
     }
     
@@ -58,9 +60,8 @@ class Game {
     
     /// This function manages turn by turn current player and ennemy
     /// check if current player is nil  or if current player is playre 2
-    /// if nil   assign currentplayer and enemy player
     /// add 1 round to  numberOfRounds
-    private func managePlayerTurns() {
+    private func assignPlayerTurns() {
         
         if currentPlayer == nil || currentPlayer == playerTwo {
             currentPlayer = playerOne
@@ -81,14 +82,9 @@ class Game {
         
     private func startFight() {
         
-        /// Local variable to store  randomly found weapon
-        let bonus = Bonus()
+        /// Local constant to store  randomly found weapon
         let randomBonusWeapon = bonus.presentBonusVault(for: numberOfRounds)
-      
-        
-        /// Unwraps currentPlayer optional
-        guard let currentPlayer = currentPlayer else { return }
-        
+     
         /// Prompt currentPlayer to choose a fighteer from his team
         /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a character and fight
         if randomBonusWeapon == nil {
@@ -99,38 +95,39 @@ class Game {
         }
        
         
+        /// Unwraps currentPlayer optional
+        guard let currentPlayer = currentPlayer else { return }
         /// Display player team
         currentPlayer.displayTeam()
         
         /// Await for selection and set character to local  constant
-        let selectedCharacter = currentPlayer.selectAttacker(from: currentPlayer.team)
+        let selectedCharacter = currentPlayer.selectCharacter(from: currentPlayer.team)
     
         let selectedCharacterInfos = "\(selectedCharacter.icon) \(selectedCharacter.name)"
 
         
-        /// if the selected character  from class Wizzard
-        if selectedCharacter is Wizzard {
+        /// check if character can heal
+        if selectedCharacter.canHeal {
             
             /// Confirm wizzard selection and prompt player to choose who to heal
-            print("\(selectedCharacterInfos) the Wizzard, choose who you'd like to heal:\n")
+            print("\(selectedCharacterInfos), choose who you'd like to heal:\n")
             
             /// display  current player remaining team
             currentPlayer.displayTeam()
             
             /// Await for player selection and set local variable with a character to heal
-            let characterToBeHealed = currentPlayer.selectAttacker(from: currentPlayer.team)
+            let characterToBeHealed = currentPlayer.selectCharacter(from: currentPlayer.team)
             
             /// call for heal func from the selected character , in this case the wizzard herited from character super class
             /// apply function to selected character to be healed
-            selectedCharacter.heal(character: characterToBeHealed)
+            selectedCharacter.heal(characterToBeHealed)
             
-        /// if selected character NOT from Wizzard class (eg. from any other character class)
         } else {
             
             /// display found bonus weapon to non wizzard character
-            if let foundBonusWeapon = randomBonusWeapon {
+            if let randomBonusWeapon = randomBonusWeapon {
                 /// Unwraps optional , if not nil weapon is changed for foundbonusweapon
-                selectedCharacter.weapon = foundBonusWeapon
+                selectedCharacter.weapon = randomBonusWeapon
                 /// infor player  the new weapon is in use for this character
                 print("\(selectedCharacter.weapon.name.uppercased()) is yours\n")
             }
@@ -145,25 +142,23 @@ class Game {
             enemyPlayer.displayTeam()
             
             /// Await player to choose enemy's team member and assign to local constant
-            let enemyToFight = enemyPlayer.selectAttacker(from: enemyPlayer.team)
+            let enemy = enemyPlayer.selectCharacter(from: enemyPlayer.team)
             
             /// Confirm player with selected choice
-            print("\(enemyToFight.icon) \(enemyToFight.name) was hurt by your \(selectedCharacter.weapon.name)")
+            print("\(enemy.icon) \(enemy.name) was hurt by your \(selectedCharacter.weapon.name)")
             /// Call for fight func function from the selected character class herited from character super class
-            selectedCharacter.fight(character: enemyToFight)
+            selectedCharacter.fight(enemy)
             
             /// check enemy  character currentLife , if at 0 remove from  enemyteam array
-            if enemyToFight.life == 0 {
+            if enemy.life == 0 {
                 /// uses name to compare to get the array index to be removed
-                if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemyToFight.name }) {
+                if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemy.name }) {
                     enemyPlayer.team.remove(at: index)
                 }
             }
         }
-        
         /// At the end of the fight cycle, check of any of the team array is empty
         verifyTeamStatus()
-        
     }
     
     /// func to check 3 possible end of fight scenarios checks:
@@ -177,14 +172,14 @@ class Game {
             /// If one team is empty then game over , display game stats
             displayEndGameStats()
             
-            /// check if both players's team have only a wizzard let
+            /// check if both players's team have only a wizzard
         } else if playerOne.onlyWizzardInTeamCheck() == true && playerTwo.onlyWizzardInTeamCheck() == true {
            
             displayEndGameMessageNoWinner()
             
         } else {
             /// go to next round, swap current player and enemy
-            managePlayerTurns()
+            assignPlayerTurns()
         }
     }
     

@@ -123,10 +123,10 @@ class Player: Equatable {
     private func displayCharacterMenuChoice() {
         print("""
             
-            1. \(Colossus.icon) Colossus has \(Colossus.life) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.life) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
-            3. \(Warrior.icon) Warrior has \(Warrior.life) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
-            4. \(Wizzard.icon) Wizzard has \(Warrior.life) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
+            1. \(Colossus.icon) Colossus has \(Colossus.fullLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.fullLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
+            3. \(Warrior.icon) Warrior has \(Warrior.fullLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
+            4. \(Wizzard.icon) Wizzard has \(Warrior.fullLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
             
             """)
     }
@@ -162,7 +162,7 @@ class Player: Equatable {
     /// Player selects his character from his team or enemys from other team
     /// - Parameter team: pass in team which character is selected from
     /// - Returns: return selected charater
-     func selectAttacker(from team: [Character]) -> Character {
+     func selectCharacter(from team: [Character]) -> Character {
         /// Prompt player to make a choice
         if let playerChoice = readLine() {
             /// convert string to Int
@@ -175,7 +175,7 @@ class Player: Equatable {
             /// if choice not valid inform player and return to selection
             print("oups! this choice does not exist")
         }
-        return selectAttacker(from: team)
+        return selectCharacter(from: team)
     }
    
     

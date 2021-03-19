@@ -14,9 +14,9 @@ class Character {
     var name: String
     var icon: String
     var life: Int
+    var maxLife: Int
     var canHeal: Bool
     var weapon: Weapon
-    
     
     
     /// Character's properties
@@ -24,27 +24,26 @@ class Character {
     ///   - name: companion's name given by the player
     ///   - life: tracks current Life of the companions
     ///   - weapon: default weapon carried by the companion
-    init(name: String, icon: String, life: Int, canHeal: Bool, weapon: Weapon) {
+    init(name: String, icon: String, life: Int, maxLife: Int, canHeal: Bool, weapon: Weapon) {
         self.name = name
         self.icon = icon
         self.life = life
+        self.maxLife = maxLife
         self.canHeal = canHeal
         self.weapon = weapon
     }
     
-    
     // MARK: - Characters abilities
     
-    
-    /// attacks enemies
-    /// reduces eneny's currentLifeby weapon damage point
-    /// - Parameter enemy: pass in oponent companion
-    func fight(character: Character) {
-        character.life -= self.weapon.damage
+    /// attacks enemies function
+    /// reduces eneny's life by weapon damage point
+    /// - Parameter enemy: pass in character to attack
+    func fight(_ character: Character) {
+        character.life -= weapon.damage
         
         /// if enemy's current Life equate 0 or less
         /// set currentLife at 0
-        /// inform player companions dead
+        /// inform player character dead
         if character.life <= 0 {
             character.life = 0
             print("""
@@ -60,21 +59,21 @@ class Character {
     }
     
     
-    /// heal team members
-    /// add wizzard weapon (magic wand) healing points
-    /// - Parameter teamPlayer: pass in templayer companion
-    func heal(character: Character) {
-        if self.canHeal {
-            character.life += self.weapon.healingPower
+    /// heal character function
+    /// - Parameter character: pass in character to heal
+    func heal(_ character: Character) {
+            character.life += weapon.healingPower
             
             /// if reaches max Life then current Life equate to max Life
+            if character.life > character.maxLife {
+                character.life = character.maxLife
+            }
                 print("""
 
                 ---------------------------------
                 🧬 Your Life is now \(character.life)! 🧬
                 ---------------------------------
                 """)
-        }
     }
     
     

@@ -12,20 +12,20 @@ import Foundation
 /// damages: Low
 /// healing: yes
 
-class Wizzard: Companion {
+class Wizzard: Character {
     
-    /// Character own max life point
-    static let maxLife = 100
+    /// Character  initial full life 
+    static let initialLife = 100
     /// Character's weapon
-    static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 30)
+    static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 10)
     static let icon = "🧙"
     
     /// - Parameter name: name given by the player
     init(name: String) {
         super.init(name: name,
                    icon: Wizzard.icon,
-                   maximumLife: Wizzard.maxLife,
-                   currentLife: Wizzard.maxLife,
+                   life: Wizzard.initialLife,
+                   canHeal: true,
                    weapon: Wizzard.wand)
     }
 }

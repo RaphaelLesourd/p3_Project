@@ -12,10 +12,10 @@ import Foundation
 /// damages: Low  10 as per request
 /// healing: None
 
-class Warrior: Companion {
+class Warrior: Character {
     
-    /// Character own max life point
-    static let maxLife = 100
+    /// Character  initial full life 
+    static let initialLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
     static let icon = "🥷🏼"
@@ -24,8 +24,8 @@ class Warrior: Companion {
     init(name: String) {
         super.init(name: name,
                    icon: Warrior.icon,
-                   maximumLife: Warrior.maxLife,
-                   currentLife: Warrior.maxLife,
+                   life: Warrior.initialLife,
+                   canHeal: false,
                    weapon: Warrior.weapon)
     }
 }

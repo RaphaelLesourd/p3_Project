@@ -39,6 +39,7 @@ class Player: Equatable {
    
     // MARK: - Player name
     
+    /// set play's name 
     func setName() {
         print("✋ Hey, Choose a name for Player \(playerId):")
         if let playerName = readLine(), !playerName.isEmpty {
@@ -119,63 +120,65 @@ class Player: Equatable {
     private func displayCharacterMenuChoice() {
         print("""
             
-            1. \(Colossus.icon) Colossus has \(Colossus.initialLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.initialLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
-            3. \(Warrior.icon) Warrior has \(Warrior.initialLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
+            1. \(Colossus.icon) Colossus has \(Colossus.initialLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damagePower) damage points.
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.initialLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damagePower) damage points.
+            3. \(Warrior.icon) Warrior has \(Warrior.initialLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damagePower) damage points.
             4. \(Wizzard.icon) Wizzard has \(Warrior.initialLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
             
             """)
     }
     
     
-     func displayTeam() {
-    
-        guard team.count != 0 else {
-            print("🪦 All Dead ! ⚰️")
-            return
-        }
-        
+    func displayTeam(gameOver: Bool = false) {
+
         //enumarate team array to display remaining characters
         for (index, character) in team.enumerated() {
             
-            var weaponStrength = String()
-            
-            /// Check if character is wizzard
+            /// Check if character can heal
             /// success case : display weapon healing power
             /// fail case : display weapon damage power
-            if let chosenCharacter = character as? Wizzard {
-                weaponStrength = "\(chosenCharacter.weapon.healingPower)"
-            } else {
-                weaponStrength = "\(character.weapon.damage)"
+            let weaponPower = character.canHeal ? "\(character.weapon.healingPower)" : "\(character.weapon.damagePower)"
+            
+            if character.life > 0 || gameOver == true {
+                print("\(index + 1). \(character.icon) \(character.name.uppercased()) ❤️ \(character.life)  🥊 Weapon: \(character.weapon.name) \(weaponPower) ")
             }
-            print("\(index + 1). \(character.icon) \(character.name.uppercased()). ❤️ Life: \(character.life)      🥊 Weapon: \(character.weapon.name) \(weaponStrength) ")
+           
         }
     }
     
     
-    
-    
     /// Player selects his character from his team or enemys from other team
     /// - Parameter team: pass in team which character is selected from
-    /// - Returns: return selected charater
+    /// - Returns: return selected character
      func selectCharacter(from team: [Character]) -> Character {
         /// Prompt player to make a choice
         if let playerChoice = readLine() {
+            
             /// convert string to Int
             /// check if player choice is valid by comparing input to team count
-        
-            if let index = Int(playerChoice), index <= team.count {
+            /// final check of character life is equal to 0 (dead) or not
+            if let index = Int(playerChoice), index <= team.count, team[index - 1].life > 0 {
                 /// if choice is valid return character
                 return team[index - 1]
             }
             /// if choice not valid inform player and return to selection
-            print("oups! this choice does not exist")
+            print("oups! this choice is not available")
         }
         return selectCharacter(from: team)
     }
    
     
-    /// func checking if wizzard on is present
+    /// Check if the sum of all characters life in the team is equal to 0
+    /// - Returns: true or false if sum of lives is equal to 0
+    func allCharactersDead() -> Bool {
+        var totalTeamLife = Int()
+        for character in team {
+            totalTeamLife += character.life
+        }
+        return totalTeamLife == 0
+    }
+    
+    /// checking if wizzard on is present
     /// to perfom in game class a check if  both team have wizzard.
     /// the game would finish to prevent no win situation as wizzard dont attack
     /// - Returns: true/false statement if only wizzard remain

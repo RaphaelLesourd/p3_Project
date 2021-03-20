@@ -11,7 +11,7 @@ import Foundation
 class Weapon {
     
     var name: String
-    var damage: Int
+    var damagePower: Int
     
     /// This paramater in only for the companions with healing powers (Wizzard) all other companions its set to 0
     var healingPower: Int
@@ -23,7 +23,7 @@ class Weapon {
     ///   - healingPower: number of point add to team companion's life points
     init(name: String, damages: Int, healingPower: Int) {
         self.name = name
-        self.damage = damages
+        self.damagePower = damages
         self.healingPower = healingPower
     }
     

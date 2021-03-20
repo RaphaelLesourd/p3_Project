@@ -13,12 +13,11 @@ import Foundation
 /// healing: None
 
 class Colossus: Character {
-    
    
     /// Character  initial full life
     static let initialLife = 80
     /// Character's weapon
-    static let weapon = Weapon(name: "Punch", damages: 15, healingPower: 0)
+    static let weapon = Weapon(name: "Punch", damages: 35, healingPower: 0)
     static let icon = "💪"
     
     /// - Parameter name: name given by the player

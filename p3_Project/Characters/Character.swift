@@ -36,10 +36,10 @@ class Character {
     // MARK: - Characters abilities
     
     /// attacks enemies function
-    /// reduces eneny's life by weapon damage point
+    /// reduces eneny's life by weapon damage power
     /// - Parameter enemy: pass in character to attack
     func fight(_ character: Character) {
-        character.life -= weapon.damage
+        character.life -= weapon.damagePower
         
         /// if enemy's current Life equate 0 or less
         /// set currentLife at 0
@@ -54,17 +54,17 @@ class Character {
 
             """)
         } else {
-            print("\(character.icon) \(character.name) life is down to \(character.life) points.\n")
+            print("\(character.icon) \(character.name) life is down to \(character.life)\n")
         }
     }
     
     
-    /// heal character function
+    /// heal character 
     /// - Parameter character: pass in character to heal
     func heal(_ character: Character) {
             character.life += weapon.healingPower
             
-            /// limit life to go over 100
+            /// limit life to not go over 100
             if character.life > 100 {
                 character.life = 100
             }

@@ -40,7 +40,7 @@ class Bonus {
                 ✨----------------------------------------------------------✨
                 ✨ You found a vault containing a \(foundWeapon.name)
                 ✨
-                ✨ It will give \(foundWeapon.damage) points of damage to your enemy!
+                ✨ It will give \(foundWeapon.damagePower) points of damage to your enemy!
                 ✨----------------------------------------------------------✨
 
                 

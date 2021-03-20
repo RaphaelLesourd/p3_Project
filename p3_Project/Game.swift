@@ -8,7 +8,6 @@
 import Foundation
 
 /// Class manages all functions for  the game, turns , fight , check team status and  displays winner with stats
-
 class Game: Bonus {
     
     /// Instantiate 2 players with a player Id
@@ -56,10 +55,9 @@ class Game: Bonus {
     }
     
     
-    
     /// This function manages turn by turn current player and ennemy
-    /// check if current player is nil  or if current player is playre 2
-    /// add 1 round to  numberOfRounds
+    /// check if current player is nil  or if current player is playerTwo
+    /// add 1 round 
     private func assignPlayerTurns() {
         
         if currentPlayer == nil || currentPlayer == playerTwo {
@@ -72,7 +70,7 @@ class Game: Bonus {
             enemyPlayer = playerOne
         }
         /// Inform player round number and  which player is current number
-        print("\n****\n*******  ROUND \(numberOfRounds) - PLAYER \(currentPlayer?.name ?? "") TURN\n****")
+        print("\n****\n*******  ROUND \(numberOfRounds) - \(currentPlayer?.name ?? "")'S TURN'\n****")
         
         /// start the fight
         startFight()
@@ -84,11 +82,11 @@ class Game: Bonus {
         /// Local constant to store  randomly found weapon
         let randomBonusWeapon = presentBonusVault(for: numberOfRounds)
      
-        /// Prompt currentPlayer to choose a fighteer from his team
-        /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a character and fight
+        /// Prompt currentPlayer to choose a character from his team
+        /// if foundBonusWeapon not nil  prompt the player to apply the wepon to a character and fight
         if randomBonusWeapon == nil {
-            print("\nSelect a character to attack your enemy")
-            print("Wizzads can only heal!\n")
+            print("\nSelect an attacker:")
+            print("(Wizzads can only heal!)\n")
         } else {
             print("\nSelect a character to give this bonus and to attack your enemy:\n")
         }
@@ -132,7 +130,7 @@ class Game: Bonus {
             }
             
             /// Prompt player to choose who to attack
-            print("\(selectedCharacterInfos) you have \(selectedCharacter.life) life points left, you're carrying \(selectedCharacter.weapon.name.uppercased()), causing \(selectedCharacter.weapon.damage) points damages!\nWho you'd like to attack ?\n")
+            print("\(selectedCharacterInfos)  ❤️ \(selectedCharacter.life) uses \(selectedCharacter.weapon.name.uppercased()) (\(selectedCharacter.weapon.damagePower))\n*** Who you'd like to attack ? \n")
             
             /// unwrap enemyPlayer optional
             guard let enemyPlayer = enemyPlayer else {return}
@@ -147,37 +145,29 @@ class Game: Bonus {
             print("\(enemy.icon) \(enemy.name) was hurt by your \(selectedCharacter.weapon.name)")
             /// Call for fight func function from the selected character class herited from character super class
             selectedCharacter.fight(enemy)
-            
-            /// check enemy  character currentLife , if at 0 remove from  enemyteam array
-            if enemy.life == 0 {
-                /// uses name to compare to get the array index to be removed
-                if let index = enemyPlayer.team.firstIndex(where: { $0.name == enemy.name }) {
-                    enemyPlayer.team.remove(at: index)
-                }
-            }
+
         }
         /// At the end of the fight cycle, check of any of the team array is empty
         verifyTeamStatus()
     }
     
-    /// func to check 3 possible end of fight scenarios checks:
-    /// - one team has no character left : game ends with a winner
-    /// - both teams have only wizzard left : game ends no winner
-    /// - none of the above cases are true , the game continue with another round
+    /// Round possible ending:
+    /// playerOne team all dead  - playerTwo wins
+    /// playerTwo team all dead - playerOne vins
+    /// both team only have wizzard that cant kill one another - No winner
+    /// none of the other cases are valid - play another round
     private func verifyTeamStatus() {
         
-        /// Check if player's teams array are empty
-        if playerOne.team.isEmpty || playerTwo.team.isEmpty {
-            /// If one team is empty then game over , display game stats
-            displayEndGameStats()
+        if playerOne.allCharactersDead() {
+           displayWinner(as: playerTwo)
             
-            /// check if both players's team have only a wizzard
+        } else if playerTwo.allCharactersDead() {
+           displayWinner(as: playerOne)
+            
         } else if playerOne.onlyWizzardInTeamCheck() == true && playerTwo.onlyWizzardInTeamCheck() == true {
-           
             displayEndGameMessageNoWinner()
             
         } else {
-            /// go to next round, swap current player and enemy
             assignPlayerTurns()
         }
     }
@@ -189,21 +179,18 @@ class Game: Bonus {
     /// At the end of the game
     /// Display  who won the tournament
     /// Display player number and associated team remaining
-    private func displayEndGameStats() {
+    private func displayWinner(as player: Player) {
         
-        /// check each team count with this tuple and  shows player number that won the game
-        let playerNumber = playerOne.team.count > playerTwo.team.count ? playerOne.name : playerTwo.name
-         
         /// Display end of game board with
         /// - Which player won the game
         /// - How many rounds played
         /// - Remaining characters for the wining team
         /// - Loser team show all characters are dead
-        print("\n\n⭐️⭐️⭐️ Player \(playerNumber) WON in \(numberOfRounds) rounds ⭐️⭐️⭐️\n")
-        print("Player \(playerOne.name) Team")
-        playerOne.displayTeam()
-        print("\nPlayer \(playerTwo.name) Team")
-        playerTwo.displayTeam()
+        print("\n\n⭐️⭐️⭐️ \(player.name) WON IN \(numberOfRounds) ROUNDS ⭐️⭐️⭐️\n")
+        print("\(playerOne.name) Team")
+        playerOne.displayTeam(gameOver: true)
+        print("\(playerTwo.name) Team")
+        playerTwo.displayTeam(gameOver: true)
        
     }
     

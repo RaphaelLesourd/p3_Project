@@ -202,10 +202,6 @@ class Game: Bonus {
             ------------------------------------------------------------------
 
             """)
-        print("Player \(playerOne.playerNumber) Team")
-        playerOne.displayTeam()
-        print("\nPlayer \(playerTwo.playerNumber) Team\n")
-        playerTwo.displayTeam()
-        
+     
     }
 }

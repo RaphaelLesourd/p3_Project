@@ -157,7 +157,7 @@ class Player: Equatable {
             /// convert string to Int
             /// check if player choice is valid by comparing input to team count
             /// final check of character life is equal to 0 (dead) or not
-            if let index = Int(playerChoice), index <= team.count, team[index - 1].life > 0 {
+            if let index = Int(playerChoice), index > 0 && index <= team.count, team[index - 1].life > 0 {
                 /// if choice is valid return character
                 return team[index - 1]
             }

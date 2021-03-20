@@ -59,12 +59,10 @@ class Game: Bonus {
     /// check if current player is nil  or if current player is playerTwo
     /// add 1 round 
     private func assignPlayerTurns() {
-        
+        numberOfRounds += 1
         if currentPlayer == nil || currentPlayer == playerTwo {
             currentPlayer = playerOne
             enemyPlayer = playerTwo
-            
-            numberOfRounds += 1
         } else {
             currentPlayer = playerTwo
             enemyPlayer = playerOne

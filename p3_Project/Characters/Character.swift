@@ -14,7 +14,6 @@ class Character {
     var name: String
     var icon: String
     var life: Int
-    var maxLife: Int
     var canHeal: Bool
     var weapon: Weapon
     
@@ -24,15 +23,16 @@ class Character {
     ///   - name: companion's name given by the player
     ///   - life: tracks current Life of the companions
     ///   - weapon: default weapon carried by the companion
-    init(name: String, icon: String, life: Int, maxLife: Int, canHeal: Bool, weapon: Weapon) {
+    init(name: String, icon: String, life: Int, canHeal: Bool, weapon: Weapon) {
         self.name = name
         self.icon = icon
         self.life = life
-        self.maxLife = maxLife
         self.canHeal = canHeal
         self.weapon = weapon
     }
     
+    
+ 
     // MARK: - Characters abilities
     
     /// attacks enemies function
@@ -64,9 +64,9 @@ class Character {
     func heal(_ character: Character) {
             character.life += weapon.healingPower
             
-            /// if reaches max Life then current Life equate to max Life
-            if character.life > character.maxLife {
-                character.life = character.maxLife
+            /// limit life to go over 100
+            if character.life > 100 {
+                character.life = 100
             }
                 print("""
 

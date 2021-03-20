@@ -15,8 +15,7 @@ class Bonus {
                         Weapon(name: "🪚 Saw", damages: 70, healingPower: 0),
                         Weapon(name: "🟢 Magic Dust Pouch", damages: 50, healingPower: 0),
                         Weapon(name: "🍬 Candy Of Death", damages: 30, healingPower: 0),
-                        Weapon(name: "🧻 Toilet Paper Roll", damages: 10, healingPower: 0),
-    ]
+                        Weapon(name: "🧻 Toilet Paper Roll", damages: 10, healingPower: 0)]
     
     
     

@@ -15,7 +15,7 @@ import Foundation
 class Wizzard: Character {
     
     /// Character  initial full life 
-    static let fullLife = 100
+    static let initialLife = 100
     /// Character's weapon
     static let wand = Weapon(name: "Magic Wand", damages: 0, healingPower: 10)
     static let icon = "🧙"
@@ -24,8 +24,7 @@ class Wizzard: Character {
     init(name: String) {
         super.init(name: name,
                    icon: Wizzard.icon,
-                   life: Wizzard.fullLife,
-                   maxLife: Wizzard.fullLife,
+                   life: Wizzard.initialLife,
                    canHeal: true,
                    weapon: Wizzard.wand)
     }

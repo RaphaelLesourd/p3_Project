@@ -15,8 +15,6 @@ import Foundation
 /// - Create team
 /// - Display team
 /// - Selecter a character to add to the team
-
-
 class Player: Equatable {
     
     /// Class conforms to Equatable protocol so current player and enemy's player can be compared to swap turn
@@ -42,7 +40,7 @@ class Player: Equatable {
     // MARK: - Player name
     
     func setName() {
-        print("💭 Hey, Player \(playerId) choose a name for yourself:")
+        print("✋ Hey, Choose a name for Player \(playerId):")
         if let playerName = readLine(), !playerName.isEmpty {
             name = playerName.uppercased()
         } else {
@@ -50,9 +48,7 @@ class Player: Equatable {
             setName()
         }
     }
-    
-    
-    
+   
     
     // MARK: - Team creation
     
@@ -123,10 +119,10 @@ class Player: Equatable {
     private func displayCharacterMenuChoice() {
         print("""
             
-            1. \(Colossus.icon) Colossus has \(Colossus.fullLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
-            2. \(Dwarf.icon) Dwarf has \(Dwarf.fullLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
-            3. \(Warrior.icon) Warrior has \(Warrior.fullLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
-            4. \(Wizzard.icon) Wizzard has \(Warrior.fullLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
+            1. \(Colossus.icon) Colossus has \(Colossus.initialLife) pts Life. Uses a \(Colossus.weapon.name) giving \(Colossus.weapon.damage) damage points.
+            2. \(Dwarf.icon) Dwarf has \(Dwarf.initialLife) pts Life. Uses a \(Dwarf.weapon.name) giving \(Dwarf.weapon.damage) damage points.
+            3. \(Warrior.icon) Warrior has \(Warrior.initialLife) pts Life. Uses a \(Warrior.weapon.name) giving \(Warrior.weapon.damage) damage points.
+            4. \(Wizzard.icon) Wizzard has \(Warrior.initialLife) pts Life. Uses a \(Wizzard.wand.name) giving \(Wizzard.wand.healingPower) life points.
             
             """)
     }
@@ -195,7 +191,7 @@ class Player: Equatable {
     /// return name if not empty and not in the team already
     private func characterNameRequest() -> String {
         /// Prompt player to give a name
-        print("💭 Choose a name:")
+        print("✋ Choose a name:")
         
         /// Check is input is empty and if name already exits in the team
         if let input = readLine() {

@@ -9,7 +9,7 @@ import Foundation
 
 /// Class manages all functions for  the game, turns , fight , check team status and  displays winner with stats
 
-class Game {
+class Game: Bonus {
     
     /// Instantiate 2 players with a player Id
     private let playerOne = Player(playerNumber: 1)
@@ -22,8 +22,7 @@ class Game {
     /// Tracks number of rounds
     private var numberOfRounds = Int()
     
-    let bonus = Bonus()
-    
+  
     /// The game starts
     func start() {
         // Reset number of rounds 
@@ -83,7 +82,7 @@ class Game {
     private func startFight() {
         
         /// Local constant to store  randomly found weapon
-        let randomBonusWeapon = bonus.presentBonusVault(for: numberOfRounds)
+        let randomBonusWeapon = presentBonusVault(for: numberOfRounds)
      
         /// Prompt currentPlayer to choose a fighteer from his team
         /// if foundBonusWeapon not nil (bonus found) prompt the player to apply the wepon to a character and fight

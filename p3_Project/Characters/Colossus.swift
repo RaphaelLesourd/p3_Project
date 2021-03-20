@@ -16,7 +16,7 @@ class Colossus: Character {
     
    
     /// Character  initial full life
-    static let fullLife = 80
+    static let initialLife = 80
     /// Character's weapon
     static let weapon = Weapon(name: "Punch", damages: 15, healingPower: 0)
     static let icon = "💪"
@@ -25,8 +25,7 @@ class Colossus: Character {
     init(name: String) {
         super.init(name: name,
                    icon: Colossus.icon,
-                   life: Colossus.fullLife,
-                   maxLife: Colossus.fullLife,
+                   life: Colossus.initialLife,
                    canHeal: false,
                    weapon: Colossus.weapon)
     }

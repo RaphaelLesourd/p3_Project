@@ -15,7 +15,7 @@ import Foundation
 class Warrior: Character {
     
     /// Character  initial full life 
-    static let fullLife = 100
+    static let initialLife = 100
     /// Character's weapon
     static let weapon = Weapon(name: "Sword", damages: 10, healingPower: 0)
     static let icon = "🥷🏼"
@@ -24,8 +24,7 @@ class Warrior: Character {
     init(name: String) {
         super.init(name: name,
                    icon: Warrior.icon,
-                   life: Warrior.fullLife,
-                   maxLife: Warrior.fullLife,
+                   life: Warrior.initialLife,
                    canHeal: false,
                    weapon: Warrior.weapon)
     }

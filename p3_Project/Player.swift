@@ -77,7 +77,7 @@ class Player: Equatable {
                 
                 var character: Character?
                 /// prompt player to give a name to this character
-                let name = characterNameRequest().uppercased()
+                let name = characterNameRequest()
                 
                 switch userChoice {
                 case "1":
@@ -212,7 +212,8 @@ class Player: Equatable {
     /// check is character with same name already exists in the team
     /// returns  true or false if team already contains name
     private func characterNameExist(for name: String) -> Bool {
-        if team.contains(where: {$0.name == name}) {
+        print("DEBUG: \(name)")
+        if team.contains(where: {$0.name.uppercased() == name.uppercased()}) {
             return true
         }
         return false
